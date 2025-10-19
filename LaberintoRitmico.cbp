@@ -40,6 +40,14 @@
 			<Add library="sfml-main" />
 			<Add directory="SFML/lib" />
 		</Linker>
+		<Unit filename="Gameplay.cpp" />
+		<Unit filename="Gameplay.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="Menu.cpp" />
+		<Unit filename="Menu.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
