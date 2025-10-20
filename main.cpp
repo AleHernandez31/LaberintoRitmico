@@ -3,15 +3,20 @@
 #include <iostream>
 
 int main() {
+    //Inicialización de ventana
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
 
     Menu menu;
 
+    // Game Loop
     while (window.isOpen()) {
+
+        // ReadInput
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
+
                 // Movimiento y seleccion de menu.
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Up)
@@ -27,11 +32,24 @@ int main() {
                         window.close();
                 }
             }
+
         }
 
+        // CMD
+
+
+        // Update
         window.clear();
+
+
+        // Draw
         menu.dibujar(window);
+
+
+        // Display
         window.display();
+
+
     }
 
     return 0;
