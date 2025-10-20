@@ -1,12 +1,14 @@
 #include <SFML/Graphics.hpp>
-#include "Menu.h"
 #include <iostream>
+#include "Menu.h"
+#include "Player.h"
 
 int main() {
     //Inicialización de ventana
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
 
     Menu menu;
+    Player player;
 
     // Game Loop
     while (window.isOpen()) {
@@ -40,10 +42,12 @@ int main() {
 
         // Update
         window.clear();
+        //player.update();
 
 
         // Draw
         menu.dibujar(window);
+        //window.draw(player);
 
 
         // Display

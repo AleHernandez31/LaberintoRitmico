@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1760916593 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
+1760973302 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
-	"Menu.h"
 	<iostream>
+	"Menu.h"
+	"Player.h"
 
 1699061964 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -862,4 +863,10 @@
 1760916593 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\menu.cpp
 	"Menu.h"
 	<iostream>
+
+1760973278 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.h
+	<SFML\Graphics.hpp>
+
+1760973337 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.cpp
+	"Player.h"
 
