@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1760973302 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
+1760998668 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
@@ -857,12 +857,11 @@
 
 1760916593 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\gameplay.cpp
 
-1760916593 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\menu.h
+1760998668 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\menu.h
 	<SFML/Graphics.hpp>
 
-1760916593 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\menu.cpp
+1760998668 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\menu.cpp
 	"Menu.h"
-	<iostream>
 
 1760973278 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.h
 	<SFML\Graphics.hpp>

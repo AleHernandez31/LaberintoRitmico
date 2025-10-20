@@ -5,6 +5,7 @@
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
+    window.setFramerateLimit(60);
 
     Menu menu;
     Player player;
@@ -31,7 +32,7 @@ int main() {
                             menu.moverAbajo(); // Lo mismo que arriba
                         }
                         else if (event.key.code == sf::Keyboard::Enter) {
-                            int opcion = menu.getOpcionSeleccionada(); // Asigna el valor a opcion cuando preciona enter
+                            int opcion = menu.getOpcionSeleccionada(); // Asigna el valor a opcion cuando presiona enter
 
                             if (opcion == 0) {             //  !!ESTO ESTA HARDOCDEADO DESPUES HAY QUE CAMBIARLO PARA QUE SEA MAS FLEXIBLE!!
                                 estadoActual = Gameplay;  // Gamplay = 0 ya que se lo asigno en moverArriba.
