@@ -423,10 +423,11 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1760913041 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
+1760995754 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
-	"Menu.h"
 	<iostream>
+	"Menu.h"
+	"Player.h"
 
 1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -846,11 +847,10 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1760912067 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
+1760996214 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
 	"Menu.h"
-	<iostream>
 
-1760912289 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.h
+1760996076 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.h
 	<SFML/Graphics.hpp>
 
 1760912401 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\gameplay.cpp
@@ -868,5 +868,11 @@
 	<SFML\Graphics.hpp>
 
 1760973337 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.cpp
+	"Player.h"
+
+1760992149 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
+	<SFML\Graphics.hpp>
+
+1760992149 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
 	"Player.h"
 

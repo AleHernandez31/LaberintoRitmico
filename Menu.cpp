@@ -1,13 +1,13 @@
 #include "Menu.h"
-#include <iostream>
+
 
 Menu::Menu() {
     // Imagen menu
-    tex.loadFromFile("menu.png");
+    tex.loadFromFile("assets/images/menu.png");
     image.setTexture(tex);
 
     // Cargar Fuente
-    font.loadFromFile("arial.ttf");
+    font.loadFromFile("assets/fonts/arial.ttf");
     // Creacion del texto
     textoJugar.setFont(font); // Fuente
     textoJugar.setString("JUGAR"); // Texto
@@ -30,7 +30,7 @@ void Menu::dibujar(sf::RenderWindow& window) {
     window.draw(textoJugar);
     window.draw(textoSalir);
 }
-// "Movimiento del teclado" (Seguro lo modifiquemos para que sea mas dinamico)
+// "Movimiento del teclado"
 void Menu::moverArriba() {
     textoJugar.setFillColor(sf::Color::Yellow);
     textoSalir.setFillColor(sf::Color::White);
