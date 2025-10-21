@@ -10,5 +10,5 @@ class Player: public sf::Drawable {
     private:
         sf::Sprite _sprite;
         sf::Texture _texture;
-        float _velocity;
+        sf::Vector2f _velocity;
 };

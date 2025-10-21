@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Player.h"
+#include "Song.h"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
@@ -10,6 +11,9 @@ int main() {
     Menu menu;
     Player player;
     EstadoJuego estadoActual = MENU;
+    Song nivel1Music("assets/songs/ATW.mp3", false);
+    Song introMusic("assets/sounds/Intro.mp3", true);
+    introMusic.play();
 
     // Game Loop
     while (window.isOpen()) {
@@ -69,9 +73,13 @@ int main() {
         switch (estadoActual) {
             case MENU:
                 menu.dibujar(window);
+                nivel1Music.setVolume(300);
+                nivel1Music.play();
                 break;
 
             case Gameplay:
+                introMusic.stop();
+                introMusic.play();
                 window.draw(player);
                 // Agregar Imagenes del Gameplay
                 break;
