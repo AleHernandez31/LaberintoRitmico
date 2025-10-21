@@ -57,6 +57,8 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="mapa.cpp" />
+		<Unit filename="mapa.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

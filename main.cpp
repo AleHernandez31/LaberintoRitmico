@@ -3,6 +3,7 @@
 #include "Menu.h"
 #include "Player.h"
 #include "Song.h"
+#include "Mapa.h"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
@@ -14,6 +15,14 @@ int main() {
     Song nivel1Music("assets/songs/ATW.mp3", false);
     Song introMusic("assets/sounds/Intro.mp3", true);
     introMusic.play();
+
+    //Mundo y camara del juego.
+    Map map;
+    sf::View view;
+    const float VIEW_W = 2.f * Map::CELL + Map::STREET; //tamaño del mapa 2x2 para tener visibles siempre 4 opciones (3 viables)
+    const float VIEW_H = 2.f * Map::CELL + Map::STREET;
+    view.setSize(VIEW_W, VIEW_H);
+    view.setCenter(0.f, 0.f); // centro inicial del chunk del mapa sin depender del pj: (aca toca cambiarlo ale) cuando tengas el pj)
 
     // Game Loop
     while (window.isOpen()) {
@@ -80,8 +89,13 @@ int main() {
             case Gameplay:
                 introMusic.stop();
                 introMusic.play();
-                window.draw(player);
+
+                //vista del mapa + dibujo del chunk 2x2
+                window.setView(view);
+                map.draw2x2Framed(window, sf::Vector2f(0.f, 0.f), 0, 0); //centro (0,0), grid (0,0)
+
                 // Agregar Imagenes del Gameplay
+                window.draw(player);
                 break;
 
             case Salir:
