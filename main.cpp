@@ -9,8 +9,11 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
     window.setFramerateLimit(60);
 
+    // Menu y vista de menu
     Menu menu;
-    Player player;
+    sf::View viewUI;
+    viewUI = window.getDefaultView();
+
     EstadoJuego estadoActual = MENU;
     Song nivel1Music("assets/songs/ATW.mp3", false);
     Song introMusic("assets/sounds/Intro.mp3", true);
@@ -18,11 +21,16 @@ int main() {
 
     //Mundo y camara del juego.
     Map map;
-    sf::View view;
+    sf::View viewGame;
     const float VIEW_W = 2.f * Map::CELL + Map::STREET; //tamaño del mapa 2x2 para tener visibles siempre 4 opciones (3 viables)
     const float VIEW_H = 2.f * Map::CELL + Map::STREET;
-    view.setSize(VIEW_W, VIEW_H);
-    view.setCenter(0.f, 0.f); // centro inicial del chunk del mapa sin depender del pj: (aca toca cambiarlo ale) cuando tengas el pj)
+    viewGame.setSize(VIEW_W, VIEW_H);
+
+    // Player.
+    sf::Vector2f posInicial = {0,0};
+    float velocidad = 2000.f;
+    Player player(map.CELL, velocidad, posInicial);
+    sf::Clock clock;
 
     // Game Loop
     while (window.isOpen()) {
@@ -49,6 +57,8 @@ int main() {
 
                             if (opcion == 0) {             //  !!ESTO ESTA HARDOCDEADO DESPUES HAY QUE CAMBIARLO PARA QUE SEA MAS FLEXIBLE!!
                                 estadoActual = Gameplay;  // Gamplay = 0 ya que se lo asigno en moverArriba.
+                                introMusic.stop();
+                                nivel1Music.play();
                             }
                             else if (opcion == 1) {     // Salir = 1
                                 window.close();
@@ -61,9 +71,12 @@ int main() {
                     if (event.type == sf::Event::KeyPressed) {  // Vuelve directo al menu (Provisional)
                         if (event.key.code == sf::Keyboard::Escape) {
                             estadoActual = MENU;
+                            nivel1Music.stop();
+                            introMusic.play();
                         }
                         // Agregar funcionalidades del juego.
                     }
+                    player.manejadorEventos(event); // Envio el evento a la clase Player para procesarlo ahi.
                     break;
 
                 case Salir:
@@ -74,28 +87,33 @@ int main() {
 
         //CMD
 
+
         // Update
-        window.clear();
-        player.update();
+        float deltaTiempo = clock.restart().asSeconds(); // Tomo el tiempo transcurrido entre frames para pasarselo al objeto Player.
+
+        if (estadoActual == Gameplay) {
+            player.update(deltaTiempo);
+        }
+
 
         // Draw
+        window.clear();
+
         switch (estadoActual) {
             case MENU:
+                window.setView(viewUI); // Cambio a vista Menu.
+
                 menu.dibujar(window);
-                nivel1Music.setVolume(300);
-                nivel1Music.play();
                 break;
 
             case Gameplay:
-                introMusic.stop();
-                introMusic.play();
-
-                //vista del mapa + dibujo del chunk 2x2
-                window.setView(view);
-                map.draw2x2Framed(window, sf::Vector2f(0.f, 0.f), 0, 0); //centro (0,0), grid (0,0)
-
                 // Agregar Imagenes del Gameplay
-                window.draw(player);
+                viewGame.setCenter(player.getPosMundo()); // Centro la vista sobre el jugador.
+                window.setView(viewGame); // Cambio a vista Juego.
+
+                //map.draw2x2Framed(window, player.getWorldPos(), player.getPosGrilla().x, player.getPosGrilla().y); // Dibujo mapa centrado sobre la posición del jugador.
+                map.draw2x2Framed(window, player.getPosGrilla());
+                window.draw(player); // Dibujo player.
                 break;
 
             case Salir:

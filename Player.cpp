@@ -1,66 +1,99 @@
 #include "Player.h"
+#include <cmath>
 
-Player::Player() {
-    _velocity = {4, 4};
+Player::Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla)
+: _tamanioCelda(tamanioCelda), _velocidad(velocidad), _PosGrilla(posGrilla), _destino(0,0)
+{
+    if (_velocidad < 100) _velocidad = 100; // Valido que la velocidad no sea nunca menor que 100.
+    if (_velocidad > 2000) _velocidad = 2000; // Valido que la velocidad no sea nunca mayor que 2000.
+
     _texture.loadFromFile("assets/sprites/player.png");
     _sprite.setTexture(_texture);
-    // Seteo el origen del sprite en la mitad en el eje X y en la parte inferior en Y, para luego hacer un flip.
-    _sprite.setOrigin(_sprite.getGlobalBounds().width/2, _sprite.getGlobalBounds().height);
+
+    _sprite.setOrigin(_sprite.getLocalBounds().width * 0.5f, _sprite.getLocalBounds().height *0.75f);
+
+    // Posición inicial (grid -> mundo)
+    /*
+        Como el tamaño de la celda esta en pixels multiplico ese valor por la cantidad de posiciones en donde este el jugador.
+        Asi, si la posicion fuese (2,0) y la celda tiene un tamaño de 256px, el jugador se posicionaria en (512,0)
+    */
+    _sprite.setPosition(_PosGrilla.x * _tamanioCelda, _PosGrilla.y * _tamanioCelda); //
 }
 
 
-void Player::update() {
+// Proceso que tecla presiono el jugador.
+void Player::manejadorEventos(const sf::Event& e) {
+    if (e.type == sf::Event::KeyPressed) {
+        if (_PosGrilla == _destino) { // Solo proceso el evento si el jugador esta en destino. Prevengo procesar eventos mientras se esta moviendo.
+            switch (e.key.code) {
+                case sf::Keyboard::W:
+                    setDestino( 0, -1);
+                    break;
 
-    _velocity = {0, 0};
+                case sf::Keyboard::S:
+                    setDestino( 0,  1);
+                    break;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        _velocity.y = -4;
-    }
+                case sf::Keyboard::A:
+                    setDestino(-1,  0);
+                    _sprite.setScale(-1.f, 1.f); // Flipeo imagen para que mire a la izquierda.
+                    break;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        _velocity.x = -4;
-    }
+                case sf::Keyboard::D:
+                    setDestino( 1,  0);
+                    _sprite.setScale( 1.f, 1.f); // Flipeo imagen para que mire a la derecha.
+                    break;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        _velocity.y = 4;
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        _velocity.x = 4;
-    }
-
-    _sprite.move(_velocity);
-
-    // Si muevo a la izquierda flipeo la imagen "hacia atras".
-    if (_velocity.x < 0) {
-        _sprite.setScale(-1, 1);
-    }
-
-    // Si muevo a la izquierda flipeo la imagen "hacia adelante".
-    if (_velocity.x > 0) {
-        _sprite.setScale(1, 1);
-    }
-
-    // Valido si me voy de la pantalla por la izquierda y reposiciono.
-    if (_sprite.getGlobalBounds().left < 0) {
-        _sprite.setPosition(_sprite.getOrigin().x, _sprite.getPosition().y);
-    }
-
-    // Valido si me voy de la pantalla por arriba y reposiciono.
-    if (_sprite.getGlobalBounds().top < 0) {
-        _sprite.setPosition(_sprite.getPosition().x, _sprite.getOrigin().y);
-    }
-
-    // Valido si me voy de la pantalla por la derecha y reposiciono.
-    if (_sprite.getGlobalBounds().left + _sprite.getGlobalBounds().width > 800) {
-        _sprite.setPosition(800 - _sprite.getOrigin().x, _sprite.getPosition().y);;
-    }
-
-    // Valido si me voy de la pantalla por abajo y reposiciono.
-    if (_sprite.getGlobalBounds().top + _sprite.getGlobalBounds().height > 600) {
-        _sprite.setPosition(_sprite.getPosition().x, 600);
+                default:
+                    break;
+            }
+        }
     }
 }
+
+
+// Seteo el destino al que se mueve el jugador.
+void Player::setDestino(int destinoX, int destinoY) {
+    _destino.x = _PosGrilla.x + destinoX;
+    _destino.y = _PosGrilla.y + destinoY;
+}
+
+
+
+void Player::update(float deltaTiempo) {
+    sf::Vector2f destino(_destino.x * _tamanioCelda, _destino.y * _tamanioCelda); // Defino el destino.
+    sf::Vector2f posicion = _sprite.getPosition(); // Defino la posicion.
+    sf::Vector2f diferencia = destino - posicion; // Defino la diferencia entre ambas coordenadas.
+
+    // Aplico Pitagoras para tener la distancia total hasta el destino
+    float distancia = std::sqrt(diferencia.x * diferencia.x + diferencia.y * diferencia.y);
+
+    // Calculo cuanto se tiene que mover y lo muevo
+    sf::Vector2f direccion(diferencia.x / distancia, diferencia.y / distancia);
+    float pasos = _velocidad * deltaTiempo;
+
+    // Si se tiene que mover mas de lo que falta para llegar lo posiciono directamente en el destino.
+    if (pasos >= distancia) {
+        _sprite.setPosition(destino);
+        _PosGrilla = _destino;
+    } else {
+        _sprite.move(direccion * pasos); // Lo muevo la cantidad de pasos que corresponda en la direccion que corresponda.
+    }
+}
+
+
+
+sf::Vector2i Player::getPosGrilla() {
+    return _PosGrilla;
+}
+
+
+
+sf::Vector2f Player::getPosMundo() {
+    return _sprite.getPosition();
+}
+
+
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(_sprite, states);
