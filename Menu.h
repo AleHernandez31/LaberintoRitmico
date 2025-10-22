@@ -1,16 +1,27 @@
-#pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
+
+// Enum de estados del juego (Asignacion de nombres a los numeros)
+enum EstadoJuego {
+    MENU,
+    JUGANDO,
+    CONTROLES,
+    PUNTAJES,
+    SALIR
+};
 
 class Menu {
 private:
-    //Imagen menu
     sf::Texture tex;
     sf::Sprite image;
-    // Textos menu
-    sf::Text textoJugar;
-    sf::Text textoSalir;
     sf::Font font;
-    int opcionSeleccionada = 0;
+
+    // Solo textos
+    std::vector<sf::Text> textos;
+
+    int opcionSeleccionada;
+    int totalOpciones;
+
 public:
     Menu();
     void dibujar(sf::RenderWindow& window);
@@ -18,14 +29,3 @@ public:
     void moverAbajo();
     int getOpcionSeleccionada();
 };
-
-// Estados del juego(Para saber donde estamos parados)
-// enum = le das nombre a los numeros. 0 = MENU, 1 = Gameplay , 2 = Salir
-// Se utiliza para el switch
-enum EstadoJuego {
-    MENU,
-    Gameplay,
-    Salir
-};
-
-

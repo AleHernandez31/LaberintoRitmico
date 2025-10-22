@@ -425,11 +425,13 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1760995754 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
+1761162420 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
 	"Player.h"
+	"Song.h"
+	"Mapa.h"
 
 1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -849,11 +851,13 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1760996214 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
+1761162726 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
 	"Menu.h"
+	<iostream>
 
-1760996076 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.h
+1761161026 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.h
 	<SFML/Graphics.hpp>
+	<vector>
 
 1760912401 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\gameplay.cpp
 
@@ -872,11 +876,12 @@
 	"Player.h"
 	<cmath>
 
-1760992149 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
-	<SFML\Graphics.hpp>
+1761160623 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
+	<SFML/Graphics.hpp>
 
-1760992149 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
+1761160623 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
 	"Player.h"
+	<cmath>
 
 1761009202 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\song.cpp
 	<String>
@@ -1557,4 +1562,124 @@
 1761147970 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\mapa.cpp
 	"Mapa.h"
 	<cmath>
+
+1761086000 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\song.h
+	<SFML/Audio.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio.hpp
+	<SFML/System.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/Audio/Listener.hpp>
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/OutputSoundFile.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundBufferRecorder.hpp>
+	<SFML/Audio/SoundFileFactory.hpp>
+	<SFML/Audio/SoundFileReader.hpp>
+	<SFML/Audio/SoundFileWriter.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/Audio/SoundStream.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\inputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<cstddef>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\export.hpp
+	<SFML/Config.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\listener.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\music.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundStream.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundstream.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Mutex.hpp>
+	<cstdlib>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundsource.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Vector3.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\alresource.hpp
+	<SFML/Audio/Export.hpp>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\outputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<string>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\sound.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundbuffer.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+	<set>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundbufferrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<vector>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<vector>
+	<string>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundfilefactory.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+	<vector>
+	<SFML/Audio/SoundFileFactory.inl>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundfilefactory.inl
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundfilereader.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\audio\soundfilewriter.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1761160623 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\mapa.h
+	<SFML/Graphics.hpp>
+	<array>
+
+1761086000 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\mapa.cpp
+	"Mapa.h"
+	<cmath>
+
+1761086000 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\song.cpp
+	<String>
+	<iostream>
+	"Song.h"
 
