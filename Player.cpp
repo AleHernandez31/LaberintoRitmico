@@ -1,5 +1,6 @@
-#include "Player.h"
 #include <cmath>
+#include <iostream>
+#include "Player.h"
 
 Player::Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla)
 : _tamanioCelda(tamanioCelda), _velocidad(velocidad), _PosGrilla(posGrilla), _destino(0,0)
@@ -21,27 +22,39 @@ Player::Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla)
 }
 
 
-// Proceso que tecla presiono el jugador.
+// Proceso que tecla presionó el jugador.
 void Player::manejadorEventos(const sf::Event& e) {
     if (e.type == sf::Event::KeyPressed) {
         if (_PosGrilla == _destino) { // Solo proceso el evento si el jugador esta en destino. Prevengo procesar eventos mientras se esta moviendo.
             switch (e.key.code) {
                 case sf::Keyboard::W:
-                    setDestino( 0, -1);
+                    if (_PosGrilla + sf::Vector2i{0,-1} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
+                        setPosAnterior();
+                        setDestino( 0, -1);
+                    }
                     break;
 
                 case sf::Keyboard::S:
-                    setDestino( 0,  1);
+                    if (_PosGrilla + sf::Vector2i{0,1} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
+                        setPosAnterior();
+                        setDestino( 0,  1);
+                    }
                     break;
 
                 case sf::Keyboard::A:
-                    setDestino(-1,  0);
-                    _sprite.setScale(-1.f, 1.f); // Flipeo imagen para que mire a la izquierda.
+                    if (_PosGrilla + sf::Vector2i{-1,0} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
+                        setPosAnterior();
+                        setDestino(-1,  0);
+                        _sprite.setScale(-1.f, 1.f); // Flipeo imagen para que mire a la izquierda.
+                    }
                     break;
 
                 case sf::Keyboard::D:
-                    setDestino( 1,  0);
-                    _sprite.setScale( 1.f, 1.f); // Flipeo imagen para que mire a la derecha.
+                    if (_PosGrilla + sf::Vector2i{1,0} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
+                        setPosAnterior();
+                        setDestino( 1,  0);
+                        _sprite.setScale( 1.f, 1.f); // Flipeo imagen para que mire a la derecha.
+                    }
                     break;
 
                 default:
@@ -49,6 +62,11 @@ void Player::manejadorEventos(const sf::Event& e) {
             }
         }
     }
+}
+
+
+void Player::setPosAnterior() {
+    _PosGrillaAnt = _PosGrilla;
 }
 
 
