@@ -20,29 +20,28 @@ class PrototipoFuncionalidad {
     public:
         PrototipoFuncionalidad(float tamCelda, float tamCalle);
         void iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg);
-        void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& ventana, float dtSegundos);
-        sf::Vector2i objetivoActual();
-        int tiempoObjetivoMs();
-        bool hayObjetivo();
+        void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos);
 
     private:
         void spawnearSiguiente(const sf::Vector2i& desdeGrilla, int ahoraMs);
         void enAterrizajeJugador(const sf::Vector2i& posCaida, int ahoraMs);
         sf::Vector2i elegirVecino(const sf::Vector2i& g);
         void mostrarAcierto(aciertoGolpe aciertoGolpe, int deltaFirmadoMs);
-        int tiempoMs();
         std::string strConSigno(int x);
-        sf::Vector2f grillaACentroMundo(const sf::Vector2i& g);
+        void dibujarStringAcierto(sf::RenderWindow& window);
 
         float _celda = 0.f;
         float _calle = 0.f;
-        ConfigRitmo _cfg{};
-        sf::Clock _relojJuego{};
-        bool _objetivoActivo = false;
-        sf::Vector2i _objetivoGrilla{0, 0};
         int _objetivoTiempoMs = 0;
         int _indiceNota = 0;
-        sf::Vector2i _ultimaPos{INT32_MIN, INT32_MIN};
+        bool _objetivoActivo = false;
+        ConfigRitmo _cfg{};
+        std::string _ultimoAcierto;
+        sf::Clock _relojJuego{};
+        sf::Vector2i _posObjetivo{0, 0};
+        sf::Vector2i _ultimaPos;
         sf::CircleShape _circuloObjetivo;
-        std::array<sf::Color, 7> _paletaNotas{};
+        sf::Color _paletaNotas[7];
+        sf::Font _fuente;
+        sf::Text _textoAcierto;
 };

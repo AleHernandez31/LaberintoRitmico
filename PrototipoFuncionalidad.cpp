@@ -14,22 +14,30 @@ PrototipoFuncionalidad::PrototipoFuncionalidad(float tamCelda, float tamCalle)
 
     srand(time(NULL));
 
+    // Configuración inicial de texto de aciertos
+    _fuente.loadFromFile("assets/fonts/comic.ttf");
+    _textoAcierto.setFont(_fuente);
+    _textoAcierto.setCharacterSize(30);
+    _textoAcierto.setFillColor(sf::Color::Yellow);
+    _textoAcierto.setOutlineColor(sf::Color::Black);
+    _textoAcierto.setOutlineThickness(2.f);
+
     // circulo destino
-    float r = std::max(10.f, _celda * 0.18f);
+    //float r = std::max(10.f, _celda * 0.18f);
+    float r = 15.f;
     _circuloObjetivo.setRadius(r);
     _circuloObjetivo.setOrigin(r, r);
-    _circuloObjetivo.setOutlineThickness(std::max(2.f, r * 0.18f));
+    _circuloObjetivo.setOutlineThickness(3);
     _circuloObjetivo.setOutlineColor(sf::Color::Black);
 
-    _paletaNotas = {
-        sf::Color(255,  64,  64), // rojo
-        sf::Color(255, 160,  64), // naranja
-        sf::Color(255, 220,  64), // amarillo
-        sf::Color( 64, 200,  64), // verde
-        sf::Color( 64, 160, 255), // celeste
-        sf::Color(160,  64, 255), // violeta
-        sf::Color(255,  64, 160)  // magenta
-    };
+    _paletaNotas[0] = sf::Color(255,  64,  64); // rojo
+    _paletaNotas[1] = sf::Color(255, 160,  64); // naranja
+    _paletaNotas[2] = sf::Color(255, 220,  64); // amarillo
+    _paletaNotas[3] = sf::Color( 64, 200,  64); // verde
+    _paletaNotas[4] = sf::Color( 64, 160, 255); // celeste
+    _paletaNotas[5] = sf::Color(160,  64, 255); // violeta
+    _paletaNotas[6] = sf::Color(255,  64, 160); // rosa
+
 }
 
 
@@ -37,110 +45,94 @@ PrototipoFuncionalidad::PrototipoFuncionalidad(float tamCelda, float tamCalle)
 // Arranca la ronda
 void PrototipoFuncionalidad::iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg) {
         _cfg = cfg;
-        _relojJuego.restart(); // Reinicio el reloj
+        _relojJuego.restart(); // Pongo el reloj en 0
         _ultimaPos = posPlayer;
         _objetivoActivo = false;
         _indiceNota = 0;
 
-        int ahora = tiempoMs(); // Obtengo el tiempo transcurrido desde que reinicie el reloj.
+        int ahora = _relojJuego.getElapsedTime().asMilliseconds(); // Obtengo el tiempo transcurrido desde que reinicie el reloj.
         spawnearSiguiente(posPlayer, ahora);
 
-        std::cout << "Inicio. objetivo en (" << _objetivoGrilla.x << "," << _objetivoGrilla.y << ") a tiempo=" << _objetivoTiempoMs << "ms, nota=" << _indiceNota << std::endl;
+        std::cout << "Inicio. objetivo en (" << _posObjetivo.x << "," << _posObjetivo.y << "). Objetivo tiempo total=" << _objetivoTiempoMs << "ms. Nota=" << _indiceNota << std::endl;
 }
 
 
 
-void PrototipoFuncionalidad::actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& ventana, float dtSegundos) {
-    int ahora = tiempoMs();
+void PrototipoFuncionalidad::actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos) {
+    int ahora = _relojJuego.getElapsedTime().asMilliseconds();
 
-    // detectar aterrizaje: cambio de celda entre frames
+    // Si cambio de nodo, verifico como aterrizó.
     if (posPlayer != _ultimaPos) {
         enAterrizajeJugador(posPlayer, ahora);
         _ultimaPos = posPlayer;
     }
 
-    // si se paso de la ventana "good" sin caer, es tarde (bad) y generamos otro
+    // si se paso de la ventana "good", es bad
     if (_objetivoActivo && ahora > (_objetivoTiempoMs + _cfg.ventanaGoodMs)) {
         mostrarAcierto(aciertoGolpe::Bad, ahora - _objetivoTiempoMs);
         spawnearSiguiente(posPlayer, ahora);
     }
 
-    // dibujar el circulo del objetivo (color por “nota”)
+    // Dibujuo el nuevo circulo (nota)
     if (_objetivoActivo) {
-        sf::Vector2f posMundo = grillaACentroMundo(_objetivoGrilla);
+        sf::Vector2f posMundo = sf::Vector2f(_posObjetivo.x * _celda, _posObjetivo.y * _celda); // Convierto de celda a pixels
         _circuloObjetivo.setPosition(posMundo);
         _circuloObjetivo.setFillColor(_paletaNotas[_indiceNota]);
-        ventana.draw(_circuloObjetivo);
+        window.draw(_circuloObjetivo);
     }
+
+    dibujarStringAcierto(window);
+
 }
 
 
 
-// helpers por si queres consultar algo desde afuera (debug)
-sf::Vector2i PrototipoFuncionalidad::objetivoActual() {
-    return _objetivoGrilla;
-}
-
-
-
-int PrototipoFuncionalidad::tiempoObjetivoMs(){
-    return _objetivoTiempoMs;
-}
-
-
-
-bool PrototipoFuncionalidad::hayObjetivo() {
-    return _objetivoActivo;
-}
-
-
-
-// elijo el siguiente objetivo partiendo de una celda “base” y calculo el tiempo en que deberia hacerlo
-void PrototipoFuncionalidad::spawnearSiguiente(const sf::Vector2i& desdeGrilla, int ahoraMs) {
-    _objetivoGrilla = elegirVecino(desdeGrilla);
+// elijo el siguiente objetivo partiendo de una celda “base” y calculo el tiempo en que deberia atterrizar
+void PrototipoFuncionalidad::spawnearSiguiente(const sf::Vector2i& posPlayer, int ahoraMs) {
+    _posObjetivo = elegirVecino(posPlayer);
     _objetivoTiempoMs = ahoraMs + _cfg.cadenciaMs;
     int nuevaNota;
     do {
         nuevaNota = rand() % 7;
-    } while (nuevaNota == _indiceNota);
+    } while (nuevaNota == _indiceNota); // Para que no se repitan dos notas seguidas
     _indiceNota = nuevaNota;
     _objetivoActivo = true;
 
-    std::cout << "Nuevo objetivo en (" << _objetivoGrilla.x << "," << _objetivoGrilla.y << ") para tiempo=" << _objetivoTiempoMs << "ms, nota=" << _indiceNota << std::endl;
+    std::cout << "Nuevo objetivo en (" << _posObjetivo.x << "," << _posObjetivo.y << "). Objetivo tiempo total=" << _objetivoTiempoMs << "ms. Nota=" << _indiceNota << std::endl;
 }
 
 
 
-// cuando el jugador cae en alguna celda
-void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posCaida, int ahoraMs) {
+// Validacion de aterrizaje
+void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posActual, int ahoraMs) {
     if (!_objetivoActivo) return;
 
-    // si no cayo en el objetivo, es bad. igual avanzamos la secuencia
-    if (posCaida != _objetivoGrilla) {
+    // si no cayo en el objetivo, es bad. igual seteo un nuevo objetivo
+    if (posActual != _posObjetivo) {
         mostrarAcierto(aciertoGolpe::Bad, 0);
-        spawnearSiguiente(posCaida, ahoraMs);
+        spawnearSiguiente(posActual, ahoraMs);
         return;
     }
 
-    const int delta = std::abs(ahoraMs - _objetivoTiempoMs);
+    int delta = std::abs(ahoraMs - _objetivoTiempoMs);
 
     if (delta <= _cfg.ventanaPerfectMs) {
-        mostrarAcierto(aciertoGolpe::Perfect, ahoraMs - _objetivoTiempoMs);
+        mostrarAcierto(aciertoGolpe::Perfect, delta);
     } else if (delta <= _cfg.ventanaGoodMs) {
-        mostrarAcierto(aciertoGolpe::Good, ahoraMs - _objetivoTiempoMs);
+        mostrarAcierto(aciertoGolpe::Good, delta);
     } else {
-        mostrarAcierto(aciertoGolpe::Bad, ahoraMs - _objetivoTiempoMs);
+        mostrarAcierto(aciertoGolpe::Bad, delta);
     }
 
-    // seguir con la siguiente meta desde donde estas
-    spawnearSiguiente(posCaida, ahoraMs);
+    // DDefino un nuevo objetivo
+    spawnearSiguiente(posActual, ahoraMs);
 }
 
 
 
-// elige un vecino 4-dir y evita volver a la celda anterior (anti retroceso)
+// Elijo una celda vecina aletoriamente pero que no sea la celda anterior
 sf::Vector2i PrototipoFuncionalidad::elegirVecino(const sf::Vector2i& celdaActual) {
-    // Celdas vecinas posibles (derecha, izquierda, abajo, arriba)
+
     sf::Vector2i vecinos[4] = {
         {celdaActual.x + 1, celdaActual.y}, // derecha
         {celdaActual.x - 1, celdaActual.y}, // izquierda
@@ -148,30 +140,32 @@ sf::Vector2i PrototipoFuncionalidad::elegirVecino(const sf::Vector2i& celdaActua
         {celdaActual.x, celdaActual.y - 1}  // arriba
     };
 
-    // Elijo un vecino al azar, pero no permito volver a la celda anterior
+    // Elijo un vecino al azar, pero que no sea la celda anterior
     sf::Vector2i celdaElegida;
     do {
-        int indiceAleatorio = rand() % 4;           // valor entre 0 y 3
+        int indiceAleatorio = rand() % 4;
         celdaElegida = vecinos[indiceAleatorio];
-    } while (celdaElegida == _ultimaPos);        // si es la celda de la que vengo, repito
+    } while (celdaElegida == _ultimaPos); // si es la celda de la que vengo, repito
 
     return celdaElegida;
 }
 
 
 
-// imprime el acierto en consola con el delta firmado (+/- ms)
-void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int deltaFirmadoMs) {
+// imprime el acierto en consola con el delta (+/- ms)
+void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int deltaMs) {
     switch (aciertoGolpe) {
         case aciertoGolpe::Perfect:
-            std::cout << "Perfect (" << strConSigno(deltaFirmadoMs) << " ms)" << std::endl;
+            _ultimoAcierto = "PERFECT!";
+            std::cout << "Perfect (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Good:
-            std::cout << "Good (" << strConSigno(deltaFirmadoMs) << " ms)" << std::endl;
+            _ultimoAcierto = "GOOD";
+            std::cout << "Good (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Bad:
-            // si queres marcar “late” podrias chequear delta>0, pero bueh
-            std::cout << "Bad (" << strConSigno(deltaFirmadoMs) << " ms)" << std::endl;
+            _ultimoAcierto = "BAD";
+            std::cout << "Bad (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
     }
 }
@@ -179,20 +173,19 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
 
 
 // Util
-int PrototipoFuncionalidad::tiempoMs() {
-    return _relojJuego.getElapsedTime().asMilliseconds(); // Obtengo el tiempo transcurrido desde que el ultimo reinicio del reloj.
+std::string PrototipoFuncionalidad::strConSigno(int tiempo) {
+    if (tiempo > 0) return "+" + std::to_string(tiempo);
+    return std::to_string(tiempo);
 }
 
 
 
-std::string PrototipoFuncionalidad::strConSigno(int x) {
-    if (x > 0) return "+" + std::to_string(x);
-    return std::to_string(x);
-}
-
-
-
-// pasar de celda a centro en mundo (coincide con como ustedes dibujan la grilla)
-sf::Vector2f PrototipoFuncionalidad::grillaACentroMundo(const sf::Vector2i& g) {
-    return sf::Vector2f(g.x * _celda, g.y * _celda);
+void PrototipoFuncionalidad::dibujarStringAcierto(sf::RenderWindow& window) {
+    sf::View view = window.getView();
+    sf::Vector2f centro = view.getCenter();
+    sf::Vector2f tamanio = view.getSize();
+    _textoAcierto.setString(_ultimoAcierto);
+    _textoAcierto.setPosition(centro.x, centro.y - (tamanio.y * 0.20f));
+    _textoAcierto.setOrigin(_textoAcierto.getLocalBounds().width * 0.5f, _textoAcierto.getLocalBounds().height * 0.5f);
+    window.draw(_textoAcierto);
 }

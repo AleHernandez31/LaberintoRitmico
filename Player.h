@@ -21,5 +21,4 @@ private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setDestino(int destinoX, int destinoY); // Seteo el destino al que se mueve el player. La uso desde "manejadorEventos".
-    void setPosAnterior();
 };

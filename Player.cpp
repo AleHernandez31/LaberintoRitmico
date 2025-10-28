@@ -29,21 +29,21 @@ void Player::manejadorEventos(const sf::Event& e) {
             switch (e.key.code) {
                 case sf::Keyboard::W:
                     if (_PosGrilla + sf::Vector2i{0,-1} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
-                        setPosAnterior();
+                        _PosGrillaAnt = _PosGrilla;
                         setDestino( 0, -1);
                     }
                     break;
 
                 case sf::Keyboard::S:
                     if (_PosGrilla + sf::Vector2i{0,1} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
-                        setPosAnterior();
+                        _PosGrillaAnt = _PosGrilla;
                         setDestino( 0,  1);
                     }
                     break;
 
                 case sf::Keyboard::A:
                     if (_PosGrilla + sf::Vector2i{-1,0} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
-                        setPosAnterior();
+                        _PosGrillaAnt = _PosGrilla;
                         setDestino(-1,  0);
                         _sprite.setScale(-1.f, 1.f); // Flipeo imagen para que mire a la izquierda.
                     }
@@ -51,7 +51,7 @@ void Player::manejadorEventos(const sf::Event& e) {
 
                 case sf::Keyboard::D:
                     if (_PosGrilla + sf::Vector2i{1,0} != _PosGrillaAnt) { // Solo proceso el evento si el jugador no esta volviendo hacia atras
-                        setPosAnterior();
+                        _PosGrillaAnt = _PosGrilla;
                         setDestino( 1,  0);
                         _sprite.setScale( 1.f, 1.f); // Flipeo imagen para que mire a la derecha.
                     }
@@ -62,11 +62,6 @@ void Player::manejadorEventos(const sf::Event& e) {
             }
         }
     }
-}
-
-
-void Player::setPosAnterior() {
-    _PosGrillaAnt = _PosGrilla;
 }
 
 
