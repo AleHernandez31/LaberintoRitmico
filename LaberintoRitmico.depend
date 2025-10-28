@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1761253352 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
+1761612070 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
 	"Player.h"
 	"Song.h"
 	"Mapa.h"
+	"PrototipoFuncionalidad.h"
 
 1699061964 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -874,9 +875,10 @@
 1761597431 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
 
-1761246896 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.cpp
-	"Player.h"
+1761598629 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.cpp
 	<cmath>
+	<iostream>
+	"Player.h"
 
 1761160623 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
@@ -1687,4 +1689,18 @@
 	<String>
 	<iostream>
 	"Song.h"
+
+1761612336 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.cpp
+	<SFML/Graphics.hpp>
+	<array>
+	<vector>
+	<random>
+	<iostream>
+	<cmath>
+	<cstdlib>
+	<ctime>
+	"PrototipoFuncionalidad.h"
+
+1761612320 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
+	<SFML/Graphics.hpp>
 
