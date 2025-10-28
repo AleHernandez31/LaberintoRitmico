@@ -426,13 +426,15 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1761162420 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
+1761682563 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
 	"Player.h"
 	"Song.h"
 	"Mapa.h"
+	"PrototipoFuncionalidad.h"
+	"SubMenu.h"
 
 1760899006 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -852,7 +854,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1761162726 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
+1761601587 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\menu.cpp
 	"Menu.h"
 	<iostream>
 
@@ -880,12 +882,13 @@
 	<iostream>
 	"Player.h"
 
-1761160623 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
+1761679648 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
 
-1761160623 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
-	"Player.h"
+1761679648 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
 	<cmath>
+	<iostream>
+	"Player.h"
 
 1761246896 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\song.cpp
 	<String>
@@ -1677,7 +1680,7 @@
 	<SFML/Audio/Export.hpp>
 	<string>
 
-1761160623 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\mapa.h
+1761601587 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\mapa.h
 	<SFML/Graphics.hpp>
 	<array>
 
@@ -1703,4 +1706,27 @@
 
 1761657369 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
+
+1761679648 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.h
+	<SFML/Graphics.hpp>
+
+1761679648 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.cpp
+	<SFML/Graphics.hpp>
+	<array>
+	<vector>
+	<random>
+	<iostream>
+	<cmath>
+	<cstdlib>
+	<ctime>
+	"PrototipoFuncionalidad.h"
+
+1761683062 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.cpp
+	"SubMenu.h"
+	<iostream>
+
+1761682050 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.h
+	<SFML/Graphics.hpp>
+	<vector>
+	<string>
 

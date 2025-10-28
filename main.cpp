@@ -5,6 +5,7 @@
 #include "Song.h"
 #include "Mapa.h"
 #include "PrototipoFuncionalidad.h"
+#include "SubMenu.h"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Laberinto Ritmico");
@@ -12,6 +13,7 @@ int main() {
 
     // Menu y vista de menu
     Menu menu;
+    SubMenu subMenu;
     sf::View viewUI;
     viewUI = window.getDefaultView();
 
@@ -38,6 +40,11 @@ int main() {
     ConfigRitmo configRitmo;
     configRitmo.cadenciaMs = 500;
 
+    // Variables para guardar la selección
+    int nivelSeleccionado = -1;
+    int cancionSeleccionada = -1;
+
+
     // Game Loop
     while (window.isOpen()) {
 
@@ -51,31 +58,97 @@ int main() {
             // Menu principal
             switch (estadoActual) {
                 case MENU:
-                    if (event.type == sf::Event::KeyPressed) {
-                        if (event.key.code == sf::Keyboard::W) {
-                            menu.moverArriba();
-                        }
-                        else if (event.key.code == sf::Keyboard::S) {
-                            menu.moverAbajo();
-                        }
-                        else if (event.key.code == sf::Keyboard::Enter) {
-                            int opcion = menu.getOpcionSeleccionada(); // Asigna el valor a opcion cuando presiona enter
+                    // Si el submenu esta activo
+                    if (subMenu.estaActivo()) {
+                        if (event.type == sf::Event::KeyPressed) {
 
-                            if (opcion == 0) {
-                                estadoActual = JUGANDO;
-                                introMusic.stop();
-                                nivel1Music.play();
+                            // Navegacion
+                            if (event.key.code == sf::Keyboard::W) {
+                                subMenu.moverArriba();
+                            }
+                            else if (event.key.code == sf::Keyboard::S) {
+                                subMenu.moverAbajo();
+                            }
 
-                                protoFunc.iniciar(player.getPosGrilla(), configRitmo); // PROTOTIPO FUNCIONALIDAD
+                            else if (event.key.code == sf::Keyboard::Enter) {
+                                int opcion = subMenu.getOpcionSeleccionada();
+
+                                // Determinar que tipo de submenu está activo
+                                if (subMenu.getTipo() == SubMenu::SELECCION_NIVEL) {
+                                    // Solo permitir seleccionar Nivel 1 (opcion 0)
+                                    if (opcion == 0) {
+                                        nivelSeleccionado = 1;
+                                        std::cout << "Nivel seleccionado: " << nivelSeleccionado << std::endl;
+
+                                        // Mostrar submenu de canciones
+                                        subMenu.mostrarSeleccionCancion(nivelSeleccionado);
+                                    } else {
+                                        std::cout << "Nivel bloqueado!" << std::endl;
+                                    }
+                                }
+                                else if (subMenu.getTipo() == SubMenu::SELECCION_CANCION) {
+                                    // Solo permitir seleccionar Canción 1 (opcion 0)
+                                    if (opcion == 0) {
+                                        cancionSeleccionada = 1;
+                                        std::cout << "Cancion seleccionada: " << cancionSeleccionada << std::endl;
+
+                                        // Iniciar juego
+                                        subMenu.ocultar();
+                                        estadoActual = JUGANDO;
+                                        introMusic.stop();
+                                        nivel1Music.play();
+
+                                        protoFunc.iniciar(player.getPosGrilla(), configRitmo); // PROTOTIPO FUNCIONALIDAD
+
+                                        std::cout << "Iniciando juego - Nivel " << nivelSeleccionado
+                                                  << " - Cancion " << cancionSeleccionada << std::endl;
+                                    } else {
+                                        std::cout << "Cancion bloqueada!" << std::endl;
+                                    }
+                                }
                             }
-                            else if (opcion == 1) {
-                                estadoActual = CONTROLES;
+
+                            // Volver atrás con ESC
+                            else if (event.key.code == sf::Keyboard::Escape) {
+                                if (subMenu.getTipo() == SubMenu::SELECCION_CANCION) {
+                                    // Si esta en seleccion de cancion, volver a seleccion de nivel
+                                    std::cout << "Volviendo a seleccion de nivel..." << std::endl;
+                                    subMenu.mostrarSeleccionNivel();
+                                }
+                                else if (subMenu.getTipo() == SubMenu::SELECCION_NIVEL) {
+                                    // Si esta en seleccion de nivel, cerrar submenu y volver al menu
+                                    std::cout << "Cerrando submenu..." << std::endl;
+                                    subMenu.ocultar();
+                                }
                             }
-                            else if (opcion == 2) {
-                                estadoActual = PUNTAJES;
+                        }
+                    }
+                    // Si el submenu NO esta activo (menu principal)
+                    else {
+                        if (event.type == sf::Event::KeyPressed) {
+                            if (event.key.code == sf::Keyboard::W) {
+                                menu.moverArriba();
                             }
-                            else if (opcion == 3) {
-                                window.close();
+                            else if (event.key.code == sf::Keyboard::S) {
+                                menu.moverAbajo();
+                            }
+                            else if (event.key.code == sf::Keyboard::Enter) {
+                                int opcion = menu.getOpcionSeleccionada();
+
+                                if (opcion == 0) {
+                                    // JUGAR - Mostrar submenu de seleccion de nivel
+                                    std::cout << "Abriendo seleccion de nivel..." << std::endl;
+                                    subMenu.mostrarSeleccionNivel();
+                                }
+                                else if (opcion == 1) {
+                                    estadoActual = CONTROLES;
+                                }
+                                else if (opcion == 2) {
+                                    estadoActual = PUNTAJES;
+                                }
+                                else if (opcion == 3) {
+                                    window.close();
+                                }
                             }
                         }
                     }
@@ -130,6 +203,7 @@ int main() {
             case MENU:
                 window.setView(viewUI);  // Cambio a vista Menu
                 menu.dibujar(window);
+                subMenu.dibujar(window);  // Dibujar submenú encima si está activo
                 break;
 
             case JUGANDO: //lucas agregué un prefetch para corregir la cortina negra del juego, agregué codigo pero no cambie lo tuyo.
