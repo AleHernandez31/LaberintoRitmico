@@ -21,6 +21,7 @@ class PrototipoFuncionalidad {
         PrototipoFuncionalidad(float tamCelda, float tamCalle);
         void iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg);
         void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos);
+        int siguienteNota();
 
     private:
         void spawnearSiguiente(const sf::Vector2i& desdeGrilla, int ahoraMs);

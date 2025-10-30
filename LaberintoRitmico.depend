@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1761657369 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
+1761855298 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
@@ -7,6 +7,7 @@
 	"Song.h"
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
+	"SubMenu.h"
 
 1699061964 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\sfml\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -874,7 +875,7 @@
 	"Menu.h"
 	<iostream>
 
-1761650970 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.h
+1761855155 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
 
 1761650971 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\player.cpp
@@ -1693,7 +1694,7 @@
 	<iostream>
 	"Song.h"
 
-1761654964 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.cpp
+1761855117 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.cpp
 	<SFML/Graphics.hpp>
 	<array>
 	<vector>
@@ -1704,7 +1705,7 @@
 	<ctime>
 	"PrototipoFuncionalidad.h"
 
-1761657369 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
+1761854982 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
 
 1761679648 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.h
@@ -1729,4 +1730,13 @@
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
+
+1761770468 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\submenu.h
+	<SFML/Graphics.hpp>
+	<vector>
+	<string>
+
+1761770468 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\submenu.cpp
+	"SubMenu.h"
+	<iostream>
 

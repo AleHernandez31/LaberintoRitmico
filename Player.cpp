@@ -8,7 +8,7 @@ Player::Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla)
     if (_velocidad < 100) _velocidad = 100; // Valido que la velocidad no sea nunca menor que 100.
     if (_velocidad > 2000) _velocidad = 2000; // Valido que la velocidad no sea nunca mayor que 2000.
 
-    _texture.loadFromFile("assets/sprites/player.png");
+    _texture.loadFromFile("assets/sprites/playerRojo.png");
     _sprite.setTexture(_texture);
 
     _sprite.setOrigin(_sprite.getLocalBounds().width * 0.5f, _sprite.getLocalBounds().height *0.75f);
@@ -73,7 +73,7 @@ void Player::setDestino(int destinoX, int destinoY) {
 
 
 
-void Player::update(float deltaTiempo) {
+void Player::update(float deltaTiempo, int siguienteNota) {
     sf::Vector2f destino(_destino.x * _tamanioCelda, _destino.y * _tamanioCelda); // Defino el destino.
     sf::Vector2f posicion = _sprite.getPosition(); // Defino la posicion.
     sf::Vector2f diferencia = destino - posicion; // Defino la diferencia entre ambas coordenadas.
@@ -92,6 +92,58 @@ void Player::update(float deltaTiempo) {
     } else {
         _sprite.move(direccion * pasos); // Lo muevo la cantidad de pasos que corresponda en la direccion que corresponda.
     }
+
+    switch (siguienteNota) {
+        case 0:
+            _texture.loadFromFile("assets/sprites/playerRojo.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 1:
+            _texture.loadFromFile("assets/sprites/playerNaranja.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 2:
+            _texture.loadFromFile("assets/sprites/playerAmarillo.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 3:
+            _texture.loadFromFile("assets/sprites/playerVerde.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 4:
+            _texture.loadFromFile("assets/sprites/playerCeleste.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 5:
+            _texture.loadFromFile("assets/sprites/playerVioleta.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        case 6:
+            _texture.loadFromFile("assets/sprites/playerRosa.png");
+            _sprite.setTexture(_texture);
+            break;
+
+        default:
+            std::cout << "Error en carga de sprite Player. Codigo recibido invalido.";
+            break;
+    }
+
+    /*
+        _paletaNotas[0] = sf::Color(255,  64,  64); // rojo
+        _paletaNotas[1] = sf::Color(255, 160,  64); // naranja
+        _paletaNotas[2] = sf::Color(255, 220,  64); // amarillo
+        _paletaNotas[3] = sf::Color( 64, 200,  64); // verde
+        _paletaNotas[4] = sf::Color( 64, 160, 255); // celeste
+        _paletaNotas[5] = sf::Color(160,  64, 255); // violeta
+        _paletaNotas[6] = sf::Color(255,  64, 160); // rosa
+    */
+
 }
 
 

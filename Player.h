@@ -5,7 +5,7 @@ class Player : public sf::Drawable {
 public:
     Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla);
     void manejadorEventos(const sf::Event& e); // Tomo el evento desde main y muevo al jugador en consecuencia.
-    void update(float deltaTiempo); // Actualizo la posición del jugador.
+    void update(float deltaTiempo, int siguienteNota); // Actualizo la posición del jugador.
     sf::Vector2i getPosGrilla();
     sf::Vector2f getPosMundo();
 

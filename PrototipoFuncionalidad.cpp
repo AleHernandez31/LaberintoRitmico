@@ -172,6 +172,12 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
 
 
 
+int PrototipoFuncionalidad::siguienteNota() {
+    return _indiceNota;
+}
+
+
+
 // Util
 std::string PrototipoFuncionalidad::strConSigno(int tiempo) {
     if (tiempo > 0) return "+" + std::to_string(tiempo);

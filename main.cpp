@@ -193,7 +193,7 @@ int main() {
         float deltaTiempo = clock.restart().asSeconds();  // Tomo el tiempo transcurrido entre frames para pasarselo al objeto Player
 
         if (estadoActual == JUGANDO) {
-            player.update(deltaTiempo);
+            player.update(deltaTiempo, protoFunc.siguienteNota());
         }
 
         // Draw
