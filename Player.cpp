@@ -2,9 +2,11 @@
 #include <iostream>
 #include "Player.h"
 
-Player::Player(float tamanioCelda, float velocidad, sf::Vector2f posGrilla)
+Player::Player(float tamanioCelda, float velocidad, AudioControl &musicaJuego, sf::Vector2f posGrilla)
 : _tamanioCelda(tamanioCelda), _velocidad(velocidad), _PosGrilla(posGrilla), _destino(0,0)
 {
+    _vida.setAudioControl(musicaJuego);
+
     if (_velocidad < 100) _velocidad = 100; // Valido que la velocidad no sea nunca menor que 100.
     if (_velocidad > 2000) _velocidad = 2000; // Valido que la velocidad no sea nunca mayor que 2000.
 
@@ -93,6 +95,7 @@ void Player::update(float deltaTiempo, int siguienteNota) {
         _sprite.move(direccion * pasos); // Lo muevo la cantidad de pasos que corresponda en la direccion que corresponda.
     }
 
+    // Cambio color de la guitarra de acuerdo a la nota siguiente
     switch (siguienteNota) {
         case 0:
             _texture.loadFromFile("assets/sprites/playerRojo.png");
@@ -134,16 +137,30 @@ void Player::update(float deltaTiempo, int siguienteNota) {
             break;
     }
 
-    /*
-        _paletaNotas[0] = sf::Color(255,  64,  64); // rojo
-        _paletaNotas[1] = sf::Color(255, 160,  64); // naranja
-        _paletaNotas[2] = sf::Color(255, 220,  64); // amarillo
-        _paletaNotas[3] = sf::Color( 64, 200,  64); // verde
-        _paletaNotas[4] = sf::Color( 64, 160, 255); // celeste
-        _paletaNotas[5] = sf::Color(160,  64, 255); // violeta
-        _paletaNotas[6] = sf::Color(255,  64, 160); // rosa
-    */
+}
 
+
+
+void Player::reducirVida() {
+    _vida.reducirVida();
+}
+
+
+
+void Player::aumentarVida() {
+    _vida.aumentarVida();
+}
+
+
+
+void Player::restaurarVida() {
+    _vida.restaurarVida();
+}
+
+
+
+float Player::getVida() {
+    return _vida.getVida();
 }
 
 

@@ -40,6 +40,10 @@
 			<Add library="sfml-main" />
 			<Add directory="SFML/lib" />
 		</Linker>
+		<Unit filename="AudioControl.cpp" />
+		<Unit filename="AudioControl.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="Menu.cpp" />
 		<Unit filename="Menu.h">
 			<Option target="&lt;{~None~}&gt;" />
@@ -52,12 +56,12 @@
 		<Unit filename="PrototipoFuncionalidad.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="Song.cpp" />
-		<Unit filename="Song.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="SubMenu.cpp" />
 		<Unit filename="SubMenu.h" />
+		<Unit filename="Vida.cpp" />
+		<Unit filename="Vida.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="mapa.cpp" />
 		<Unit filename="mapa.h" />

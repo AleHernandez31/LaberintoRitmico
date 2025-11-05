@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 
 // config basica para el prototipo, despues vemos de hacerlo con un Archivo
 struct ConfigRitmo {
@@ -19,18 +20,22 @@ enum class aciertoGolpe {
 class PrototipoFuncionalidad {
     public:
         PrototipoFuncionalidad(float tamCelda, float tamCalle);
-        void iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg);
-        void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos);
+        //void iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg);
+        void iniciar(Player* player, const ConfigRitmo& cfg);
+        //void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos);
+        bool actualizar(sf::RenderWindow& window, float dtSegundos);
         int siguienteNota();
 
     private:
         void spawnearSiguiente(const sf::Vector2i& desdeGrilla, int ahoraMs);
+        //void enAterrizajeJugador(const sf::Vector2i& posCaida, int ahoraMs);
         void enAterrizajeJugador(const sf::Vector2i& posCaida, int ahoraMs);
         sf::Vector2i elegirVecino(const sf::Vector2i& g);
         void mostrarAcierto(aciertoGolpe aciertoGolpe, int deltaFirmadoMs);
         std::string strConSigno(int x);
-        void dibujarStringAcierto(sf::RenderWindow& window);
+        void dibujarStringAcierto(sf::RenderWindow& window); // Escribo los aciertos o fallas en pantalla
 
+        Player* _player = nullptr;
         float _celda = 0.f;
         float _calle = 0.f;
         int _objetivoTiempoMs = 0;
@@ -44,5 +49,5 @@ class PrototipoFuncionalidad {
         sf::CircleShape _circuloObjetivo;
         sf::Color _paletaNotas[7];
         sf::Font _fuente;
-        sf::Text _textoAcierto;
+        sf::Text _texto;
 };

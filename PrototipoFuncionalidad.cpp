@@ -16,11 +16,11 @@ PrototipoFuncionalidad::PrototipoFuncionalidad(float tamCelda, float tamCalle)
 
     // Configuración inicial de texto de aciertos
     _fuente.loadFromFile("assets/fonts/comic.ttf");
-    _textoAcierto.setFont(_fuente);
-    _textoAcierto.setCharacterSize(30);
-    _textoAcierto.setFillColor(sf::Color::Yellow);
-    _textoAcierto.setOutlineColor(sf::Color::Black);
-    _textoAcierto.setOutlineThickness(2.f);
+    _texto.setFont(_fuente);
+    _texto.setCharacterSize(30);
+    _texto.setFillColor(sf::Color::Yellow);
+    _texto.setOutlineColor(sf::Color::Black);
+    _texto.setOutlineThickness(2.f);
 
     // circulo destino
     //float r = std::max(10.f, _celda * 0.18f);
@@ -43,9 +43,12 @@ PrototipoFuncionalidad::PrototipoFuncionalidad(float tamCelda, float tamCalle)
 
 
 // Arranca la ronda
-void PrototipoFuncionalidad::iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg) {
+void PrototipoFuncionalidad::iniciar(Player* player, const ConfigRitmo& cfg) {
         _cfg = cfg;
         _relojJuego.restart(); // Pongo el reloj en 0
+        _player = player; // Guardo la direccion de player en un puntero.
+        (*_player).restaurarVida(); // Inicializo a vida en 100.
+        const sf::Vector2i posPlayer = (*_player).getPosGrilla();
         _ultimaPos = posPlayer;
         _objetivoActivo = false;
         _indiceNota = 0;
@@ -58,8 +61,9 @@ void PrototipoFuncionalidad::iniciar(const sf::Vector2i& posPlayer, const Config
 
 
 
-void PrototipoFuncionalidad::actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos) {
+bool PrototipoFuncionalidad::actualizar(sf::RenderWindow& window, float dtSegundos) {
     int ahora = _relojJuego.getElapsedTime().asMilliseconds();
+    const sf::Vector2i posPlayer = (*_player).getPosGrilla();
 
     // Si cambio de nodo, verifico como aterrizó.
     if (posPlayer != _ultimaPos) {
@@ -70,6 +74,7 @@ void PrototipoFuncionalidad::actualizar(const sf::Vector2i& posPlayer, sf::Rende
     // si se paso de la ventana "good", es bad
     if (_objetivoActivo && ahora > (_objetivoTiempoMs + _cfg.ventanaGoodMs)) {
         mostrarAcierto(aciertoGolpe::Bad, ahora - _objetivoTiempoMs);
+        (*_player).reducirVida();
         spawnearSiguiente(posPlayer, ahora);
     }
 
@@ -83,6 +88,12 @@ void PrototipoFuncionalidad::actualizar(const sf::Vector2i& posPlayer, sf::Rende
 
     dibujarStringAcierto(window);
 
+    // Si se quedó sin vida devuelvo un false para, en el main, salir del modo jugando.
+    if ((*_player).getVida() == 0) {
+        return false;
+    }
+
+    return true;
 }
 
 
@@ -98,7 +109,7 @@ void PrototipoFuncionalidad::spawnearSiguiente(const sf::Vector2i& posPlayer, in
     _indiceNota = nuevaNota;
     _objetivoActivo = true;
 
-    std::cout << "Nuevo objetivo en (" << _posObjetivo.x << "," << _posObjetivo.y << "). Objetivo tiempo total=" << _objetivoTiempoMs << "ms. Nota=" << _indiceNota << std::endl;
+    //std::cout << "Nuevo objetivo en (" << _posObjetivo.x << "," << _posObjetivo.y << "). Objetivo tiempo total=" << _objetivoTiempoMs << "ms. Nota=" << _indiceNota << std::endl;
 }
 
 
@@ -110,6 +121,7 @@ void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posActual, 
     // si no cayo en el objetivo, es bad. igual seteo un nuevo objetivo
     if (posActual != _posObjetivo) {
         mostrarAcierto(aciertoGolpe::Bad, 0);
+        (*_player).reducirVida();
         spawnearSiguiente(posActual, ahoraMs);
         return;
     }
@@ -118,10 +130,13 @@ void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posActual, 
 
     if (delta <= _cfg.ventanaPerfectMs) {
         mostrarAcierto(aciertoGolpe::Perfect, delta);
+        (*_player).aumentarVida();
     } else if (delta <= _cfg.ventanaGoodMs) {
         mostrarAcierto(aciertoGolpe::Good, delta);
+        (*_player).aumentarVida();
     } else {
         mostrarAcierto(aciertoGolpe::Bad, delta);
+        (*_player).reducirVida();
     }
 
     // DDefino un nuevo objetivo
@@ -157,15 +172,15 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
     switch (aciertoGolpe) {
         case aciertoGolpe::Perfect:
             _ultimoAcierto = "PERFECT!";
-            std::cout << "Perfect (" << strConSigno(deltaMs) << " ms)" << std::endl;
+            //std::cout << "Perfect (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Good:
             _ultimoAcierto = "GOOD";
-            std::cout << "Good (" << strConSigno(deltaMs) << " ms)" << std::endl;
+            //std::cout << "Good (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Bad:
             _ultimoAcierto = "BAD";
-            std::cout << "Bad (" << strConSigno(deltaMs) << " ms)" << std::endl;
+            //std::cout << "Bad (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
     }
 }
@@ -175,7 +190,6 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
 int PrototipoFuncionalidad::siguienteNota() {
     return _indiceNota;
 }
-
 
 
 // Util
@@ -190,8 +204,8 @@ void PrototipoFuncionalidad::dibujarStringAcierto(sf::RenderWindow& window) {
     sf::View view = window.getView();
     sf::Vector2f centro = view.getCenter();
     sf::Vector2f tamanio = view.getSize();
-    _textoAcierto.setString(_ultimoAcierto);
-    _textoAcierto.setPosition(centro.x, centro.y - (tamanio.y * 0.20f));
-    _textoAcierto.setOrigin(_textoAcierto.getLocalBounds().width * 0.5f, _textoAcierto.getLocalBounds().height * 0.5f);
-    window.draw(_textoAcierto);
+    _texto.setString(_ultimoAcierto);
+    _texto.setPosition(centro.x, centro.y - (tamanio.y * 0.20f));
+    _texto.setOrigin(_texto.getLocalBounds().width * 0.5f, _texto.getLocalBounds().height * 0.5f);
+    window.draw(_texto);
 }

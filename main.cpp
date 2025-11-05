@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Player.h"
-#include "Song.h"
+#include "AudioControl.h"
 #include "Mapa.h"
 #include "PrototipoFuncionalidad.h"
 #include "SubMenu.h"
@@ -18,8 +18,14 @@ int main() {
     viewUI = window.getDefaultView();
 
     EstadoJuego estadoActual = MENU;
-    Song nivel1Music("assets/songs/ATW.mp3", false);
-    Song introMusic("assets/sounds/Intro.mp3", true);
+
+    // Musica
+    AudioControl musicaJuego("assets/songs/ATW.mp3", false);
+    musicaJuego.setVolume(100.f);
+
+    AudioControl introMusic("assets/sounds/Intro.mp3", true);
+    introMusic.setVolume(100.f);
+
     introMusic.play();
 
     //Mundo y camara del juego.
@@ -32,7 +38,7 @@ int main() {
     // Player.
     sf::Vector2f posInicial = {0,0};
     float velocidad = 2000.f;
-    Player player(map.CELL, velocidad, posInicial);
+    Player player(map.CELL, velocidad, musicaJuego, posInicial);
     sf::Clock clock;
 
     // PROTOTIPO FUNCIONALIDAD
@@ -96,9 +102,9 @@ int main() {
                                         subMenu.ocultar();
                                         estadoActual = JUGANDO;
                                         introMusic.stop();
-                                        nivel1Music.play();
+                                        musicaJuego.play();
 
-                                        protoFunc.iniciar(player.getPosGrilla(), configRitmo); // PROTOTIPO FUNCIONALIDAD
+                                        protoFunc.iniciar(&player, configRitmo); // PROTOTIPO FUNCIONALIDAD
 
                                         std::cout << "Iniciando juego - Nivel " << nivelSeleccionado
                                                   << " - Cancion " << cancionSeleccionada << std::endl;
@@ -158,7 +164,7 @@ int main() {
                     if (event.type == sf::Event::KeyPressed) {  // Vuelve directo al menu (Provisional)
                         if (event.key.code == sf::Keyboard::Escape) {
                             estadoActual = MENU;
-                            nivel1Music.stop();
+                            musicaJuego.stop();
                             introMusic.play();
                         }
                     }
@@ -234,7 +240,11 @@ int main() {
 
                 window.draw(player); // Dibujo Player
 
-                protoFunc.actualizar(player.getPosGrilla(), window, deltaTiempo); // PROTOTIPO FUNCIONALIDAD
+                bool continuarJugando;
+                continuarJugando = protoFunc.actualizar(window, deltaTiempo); // PROTOTIPO FUNCIONALIDAD
+
+                if (!continuarJugando) estadoActual = MENU;
+
                 break;
 
         }

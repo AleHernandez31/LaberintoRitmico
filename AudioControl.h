@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Audio.hpp>
 
-class Song {
+class AudioControl {
     public:
-        Song(std::string path, bool isMenu);
+        AudioControl(std::string path, bool isMenu);
         void play();
         void stop();
         void pause();
