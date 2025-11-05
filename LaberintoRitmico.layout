@@ -2,34 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="PrototipoFuncionalidad.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Player.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1605" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="mapa.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5750" topLine="81" />
-		</Cursor>
-	</File>
-	<File name="SubMenu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="615" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Player.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5821" topLine="120" />
-		</Cursor>
-	</File>
-	<File name="AudioControl.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="658" topLine="0" />
+			<Cursor1 position="591" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="SubMenu.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4703" topLine="103" />
+			<Cursor1 position="7645" topLine="231" />
 		</Cursor>
 	</File>
 	<File name="PrototipoFuncionalidad.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -37,19 +17,19 @@
 			<Cursor1 position="1464" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Vida.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="758" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Menu.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="210" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="Menu.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="233" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="PrototipoFuncionalidad.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1605" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13182" topLine="296" />
 		</Cursor>
 	</File>
 	<File name="mapa.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -57,14 +37,29 @@
 			<Cursor1 position="273" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AudioControl.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3074" topLine="66" />
+			<Cursor1 position="12" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Player.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AudioControl.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="591" topLine="0" />
+			<Cursor1 position="658" topLine="11" />
+		</Cursor>
+	</File>
+	<File name="Menu.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="210" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="mapa.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5750" topLine="81" />
+		</Cursor>
+	</File>
+	<File name="Player.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1108" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="Vida.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -72,9 +67,14 @@
 			<Cursor1 position="255" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="AudioControl.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Vida.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12" topLine="0" />
+			<Cursor1 position="421" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="SubMenu.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1118" topLine="18" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

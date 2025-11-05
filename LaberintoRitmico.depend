@@ -427,12 +427,12 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1761682563 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
+1762385203 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Menu.h"
 	"Player.h"
-	"Song.h"
+	"AudioControl.h"
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
 	"SubMenu.h"
@@ -885,10 +885,12 @@
 	<iostream>
 	"Player.h"
 
-1761679648 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
+1762377125 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
+	"AudioControl.h"
+	"Vida.h"
 
-1761679648 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
+1762377125 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\player.cpp
 	<cmath>
 	<iostream>
 	"Player.h"
@@ -1711,10 +1713,11 @@
 	<SFML/Graphics.hpp>
 	"Player.h"
 
-1761679648 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.h
+1762377125 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
+	"Player.h"
 
-1761679648 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.cpp
+1762377125 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.cpp
 	<SFML/Graphics.hpp>
 	<array>
 	<vector>
@@ -1725,11 +1728,11 @@
 	<ctime>
 	"PrototipoFuncionalidad.h"
 
-1761683062 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.cpp
+1762382103 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.cpp
 	"SubMenu.h"
 	<iostream>
 
-1761682050 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.h
+1762380365 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\submenu.h
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
@@ -1757,4 +1760,19 @@
 1762375815 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\vida.h
 	<iostream>
 	"AudioControl.h"
+
+1762377125 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\audiocontrol.cpp
+	<String>
+	<iostream>
+	"AudioControl.h"
+
+1762377125 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\audiocontrol.h
+	<SFML/Audio.hpp>
+
+1762377125 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\vida.h
+	<iostream>
+	"AudioControl.h"
+
+1762385203 source:c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\vida.cpp
+	"Vida.h"
 
