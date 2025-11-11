@@ -119,7 +119,7 @@ void SubMenu::mostrarSeleccionCancion(int nivel) {
     int tamanio = 32;
 
     // Agregar cada texto
-    agregarTexto("All Too Well", posX, posYInicial, tamanio, sf::Color::White, 0);
+    agregarTexto("Arround the World", posX, posYInicial, tamanio, sf::Color::White, 0);
     agregarTexto("Cancion 2  [Bloqueado]", posX, posYInicial + margen, tamanio, sf::Color(120, 120, 120), 1);
     agregarTexto("Cancion 3  [Bloqueado]", posX, posYInicial + 2 * margen, tamanio, sf::Color(120, 120, 120), 2);
 }

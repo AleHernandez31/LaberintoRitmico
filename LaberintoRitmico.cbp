@@ -44,6 +44,8 @@
 		<Unit filename="AudioControl.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="Juego.cpp" />
+		<Unit filename="Juego.h" />
 		<Unit filename="Menu.cpp" />
 		<Unit filename="Menu.h">
 			<Option target="&lt;{~None~}&gt;" />
