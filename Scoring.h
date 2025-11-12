@@ -9,12 +9,16 @@ class Scoring {
         void sumarGood();
         void sumarBad();
         void sumarMsAterrizaje(float msNota);
+        void sumarNotaAterrizada();
         void setNivelCompletado();
         void calcularPuntuacionTotal(int dificultadJugada);
 
         float getPuntuacionTotal();
         float getPromedioMsAterrizaje();
         bool getNivelCompletado();
+        int getCantidadPerfects();
+        int getCantidadGoods();
+        int getCantidadBads();
 
     private:
         float _puntuacionTotal;

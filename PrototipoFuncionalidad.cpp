@@ -43,7 +43,7 @@ PrototipoFuncionalidad::PrototipoFuncionalidad(float tamCelda, float tamCalle)
 
 
 // Arranca la ronda
-void PrototipoFuncionalidad::iniciar(Player* player, const ConfigRitmo& cfg) {
+void PrototipoFuncionalidad::iniciar(Player* player, const ConfigRitmo& cfg, Scoring* scoring) {
         _cfg = cfg;
         _relojJuego.restart(); // Pongo el reloj en 0
         _player = player; // Guardo la direccion de player en un puntero.
@@ -52,6 +52,7 @@ void PrototipoFuncionalidad::iniciar(Player* player, const ConfigRitmo& cfg) {
         _ultimaPos = posPlayer;
         _objetivoActivo = false;
         _indiceNota = 0;
+        _scoring = scoring;
 
         int ahora = _relojJuego.getElapsedTime().asMilliseconds(); // Obtengo el tiempo transcurrido desde que reinicie el reloj.
         spawnearSiguiente(posPlayer, ahora);
@@ -118,6 +119,10 @@ void PrototipoFuncionalidad::spawnearSiguiente(const sf::Vector2i& posPlayer, in
 void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posActual, int ahoraMs) {
     if (!_objetivoActivo) return;
 
+    if (posActual != _ultimaPos) {
+        (*_scoring).sumarNotaAterrizada();
+    }
+
     // si no cayo en el objetivo, es bad. igual seteo un nuevo objetivo
     if (posActual != _posObjetivo) {
         mostrarAcierto(aciertoGolpe::Bad, 0);
@@ -172,17 +177,22 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
     switch (aciertoGolpe) {
         case aciertoGolpe::Perfect:
             _ultimoAcierto = "PERFECT!";
+            (*_scoring).sumarPerfect();
             //std::cout << "Perfect (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Good:
             _ultimoAcierto = "GOOD";
+            (*_scoring).sumarGood();
             //std::cout << "Good (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
         case aciertoGolpe::Bad:
             _ultimoAcierto = "BAD";
+            (*_scoring).sumarBad();
             //std::cout << "Bad (" << strConSigno(deltaMs) << " ms)" << std::endl;
             break;
     }
+
+    (*_scoring).sumarMsAterrizaje(deltaMs);
 }
 
 

@@ -41,6 +41,11 @@ void Scoring::sumarMsAterrizaje(float msNota) {
 }
 
 
+void Scoring::sumarNotaAterrizada() {
+    _cantidadNotasAterrizadas++;
+}
+
+
 void Scoring::setNivelCompletado() {
     _nivelCompletado = true;
 }
@@ -59,6 +64,21 @@ float Scoring::getPromedioMsAterrizaje() {
 
 bool Scoring::getNivelCompletado() {
     return _nivelCompletado;
+}
+
+
+int Scoring::getCantidadPerfects() {
+    return _cantidadPerfects;
+}
+
+
+int Scoring::getCantidadGoods() {
+    return _cantidadGoods;
+}
+
+
+int Scoring::getCantidadBads() {
+    return _cantidadBads;
 }
 
 

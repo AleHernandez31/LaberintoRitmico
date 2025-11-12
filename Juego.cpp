@@ -14,7 +14,8 @@ Juego::Juego() :
     protoFunc(map.CELL, map.STREET),
     nivelSeleccionado(-1),
     cancionSeleccionada(-1),
-    deltaTiempo(0.f)
+    deltaTiempo(0.f),
+    scoring()
 {
 
 
@@ -121,7 +122,8 @@ void Juego::procesarEventos() {
                                 introMusic.stop();
                                 musicaJuego.play();
 
-                                protoFunc.iniciar(&player, configRitmo); // PROTOTIPO FUNCIONALIDAD
+                                scoring.reiniciarScoring();
+                                protoFunc.iniciar(&player, configRitmo, &scoring); // PROTOTIPO FUNCIONALIDAD
 
                                 std::cout << "Iniciando juego - Nivel " << nivelSeleccionado
                                           << " - Cancion " << cancionSeleccionada << std::endl;
@@ -364,10 +366,16 @@ void Juego::dibujar() {
             continuarJugando = protoFunc.actualizar(window, deltaTiempo); // PROTOTIPO FUNCIONALIDAD
 
             if (!continuarJugando) {
+                scoring.calcularPuntuacionTotal(nivelSeleccionado);
                 estadoActual = MENU;
                 // Detener musica del juego y reiniciar la del intro
                 musicaJuego.stop();
                 introMusic.play();
+                std::cout << "Puntuacion total: " << scoring.getPuntuacionTotal() << std::endl;
+                std::cout << "Tiempo promedio de aterrizaje: " << scoring.getPromedioMsAterrizaje() << "ms" << std::endl;
+                std::cout << "Perfects: " << scoring.getCantidadPerfects() << std::endl;
+                std::cout << "Goods: " << scoring.getCantidadGoods() << std::endl;
+                std::cout << "Bads: " << scoring.getCantidadBads() << std::endl;
             }
         }
         if (subMenu.estaActivo()) {

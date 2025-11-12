@@ -1693,7 +1693,7 @@
 	<iostream>
 	"Song.h"
 
-1762982135 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.cpp
+1762990048 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.cpp
 	<SFML/Graphics.hpp>
 	<array>
 	<vector>
@@ -1704,9 +1704,10 @@
 	<ctime>
 	"PrototipoFuncionalidad.h"
 
-1762375302 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
+1762989189 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
 	"Player.h"
+	"Scoring.h"
 
 1762377125 c:\users\lucas\onedrive\escritorio\clon\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
@@ -3575,10 +3576,10 @@
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
 
-1762945125 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.cpp
+1762989583 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.cpp
 	"Juego.h"
 
-1762945125 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.h
+1762988893 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.h
 	<SFML/Graphics.hpp>
 	"Menu.h"
 	"SubMenu.h"
@@ -3586,10 +3587,11 @@
 	"AudioControl.h"
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
-
-1762982038 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.cpp
 	"Scoring.h"
 
-1762982036 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.h
+1762990297 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.cpp
+	"Scoring.h"
+
+1762990240 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.h
 	<iostream>
 

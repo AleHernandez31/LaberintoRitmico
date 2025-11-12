@@ -5,6 +5,7 @@
 #include "AudioControl.h"
 #include "Mapa.h"
 #include "PrototipoFuncionalidad.h"
+#include "Scoring.h"
 
 class Juego {
 public:
@@ -40,6 +41,8 @@ private:
     AudioControl introMusic;
     PrototipoFuncionalidad protoFunc;
     ConfigRitmo configRitmo;
+    Scoring scoring;
+
 
     // Variables de estado
     int nivelSeleccionado;

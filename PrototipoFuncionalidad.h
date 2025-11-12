@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Scoring.h"
 
 // config basica para el prototipo, despues vemos de hacerlo con un Archivo
 struct ConfigRitmo {
@@ -21,7 +22,7 @@ class PrototipoFuncionalidad {
     public:
         PrototipoFuncionalidad(float tamCelda, float tamCalle);
         //void iniciar(const sf::Vector2i& posPlayer, const ConfigRitmo& cfg);
-        void iniciar(Player* player, const ConfigRitmo& cfg);
+        void iniciar(Player* player, const ConfigRitmo& cfg, Scoring* scoring);
         //void actualizar(const sf::Vector2i& posPlayer, sf::RenderWindow& window, float dtSegundos);
         bool actualizar(sf::RenderWindow& window, float dtSegundos);
         int siguienteNota();
@@ -36,6 +37,7 @@ class PrototipoFuncionalidad {
         void dibujarStringAcierto(sf::RenderWindow& window); // Escribo los aciertos o fallas en pantalla
 
         Player* _player = nullptr;
+        Scoring* _scoring = nullptr;
         float _celda = 0.f;
         float _calle = 0.f;
         int _objetivoTiempoMs = 0;
