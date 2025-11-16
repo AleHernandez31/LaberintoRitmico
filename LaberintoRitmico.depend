@@ -1704,7 +1704,7 @@
 	<ctime>
 	"PrototipoFuncionalidad.h"
 
-1762989189 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
+1763250328 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
 	"Player.h"
 	"Scoring.h"
@@ -3576,10 +3576,10 @@
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
 
-1762989583 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.cpp
+1763255569 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.cpp
 	"Juego.h"
 
-1762988893 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.h
+1763250383 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.h
 	<SFML/Graphics.hpp>
 	"Menu.h"
 	"SubMenu.h"
@@ -3588,10 +3588,17 @@
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
 	"Scoring.h"
+	"ScoringArchivo.h"
 
-1762990297 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.cpp
+1763256450 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.cpp
 	"Scoring.h"
 
-1762990240 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.h
+1763251653 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoring.h
 	<iostream>
+
+1763256190 g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoringarchivo.h
+	"Scoring.h"
+
+1763256190 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoringarchivo.cpp
+	"ScoringArchivo.h"
 

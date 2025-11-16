@@ -6,6 +6,7 @@
 #include "Mapa.h"
 #include "PrototipoFuncionalidad.h"
 #include "Scoring.h"
+#include "ScoringArchivo.h"
 
 class Juego {
 public:
@@ -42,6 +43,7 @@ private:
     PrototipoFuncionalidad protoFunc;
     ConfigRitmo configRitmo;
     Scoring scoring;
+    ScoringArchivo scoringArchivo;
 
 
     // Variables de estado

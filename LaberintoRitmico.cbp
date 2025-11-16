@@ -62,6 +62,10 @@
 		<Unit filename="Scoring.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="ScoringArchivo.cpp" />
+		<Unit filename="ScoringArchivo.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="SubMenu.cpp" />
 		<Unit filename="SubMenu.h" />
 		<Unit filename="Vida.cpp" />

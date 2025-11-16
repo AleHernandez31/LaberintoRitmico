@@ -1,6 +1,7 @@
 #include "Scoring.h"
 
 Scoring::Scoring():
+    _puntuacionTotal(0),
     _totalMsAterrizaje(0),
     _cantidadPerfects(0),
     _cantidadGoods(0),
@@ -12,6 +13,7 @@ Scoring::Scoring():
 
 
 void Scoring::reiniciarScoring() {
+    _puntuacionTotal = 0;
     _totalMsAterrizaje = 0;
     _cantidadPerfects = 0;
     _cantidadGoods = 0;
@@ -143,4 +145,15 @@ void Scoring::calcularPuntuacionTotal(int dificultadJugada) {
         default:
             break;
     }
+}
+
+
+void Scoring::toString() {
+    std::cout << "----------------------------------" << std::endl;
+    std::cout << "Puntuacion total: " << this->getPuntuacionTotal() << std::endl;
+    std::cout << "Tiempo promedio de aterrizaje: " << this->getPromedioMsAterrizaje() << "ms" << std::endl;
+    std::cout << "Perfects: " << this->getCantidadPerfects() << std::endl;
+    std::cout << "Goods: " << this->getCantidadGoods() << std::endl;
+    std::cout << "Bads: " << this->getCantidadBads() << std::endl;
+    std::cout << "----------------------------------" << std::endl;
 }

@@ -19,6 +19,7 @@ class Scoring {
         int getCantidadPerfects();
         int getCantidadGoods();
         int getCantidadBads();
+        void toString();
 
     private:
         float _puntuacionTotal;

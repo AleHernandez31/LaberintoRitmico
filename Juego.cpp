@@ -15,7 +15,8 @@ Juego::Juego() :
     nivelSeleccionado(-1),
     cancionSeleccionada(-1),
     deltaTiempo(0.f),
-    scoring()
+    scoring(),
+    scoringArchivo()
 {
 
 
@@ -42,6 +43,17 @@ Juego::Juego() :
 
     configRitmo.cadenciaMs = 500;
 
+
+    //Prueba persistencia de puntuacion
+//    Scoring puntuaciones[10];
+//    scoringArchivo.leerPuntuaciones(puntuaciones);
+//
+//    for (int i=0; i<10 ; i++) {
+//        if (puntuaciones[i].getPuntuacionTotal() > 0) {
+//            puntuaciones[i].toString();
+//
+//        } else break;
+//    }
 
 }
 
@@ -371,11 +383,10 @@ void Juego::dibujar() {
                 // Detener musica del juego y reiniciar la del intro
                 musicaJuego.stop();
                 introMusic.play();
-                std::cout << "Puntuacion total: " << scoring.getPuntuacionTotal() << std::endl;
-                std::cout << "Tiempo promedio de aterrizaje: " << scoring.getPromedioMsAterrizaje() << "ms" << std::endl;
-                std::cout << "Perfects: " << scoring.getCantidadPerfects() << std::endl;
-                std::cout << "Goods: " << scoring.getCantidadGoods() << std::endl;
-                std::cout << "Bads: " << scoring.getCantidadBads() << std::endl;
+
+                if (scoringArchivo.guardarNuevaPuntuacion(scoring)) {
+                    std::cout << "Puntuacion guardada correctamente.";
+                } else std::cout << "Error al guardar la puntuacion.";
             }
         }
         if (subMenu.estaActivo()) {
