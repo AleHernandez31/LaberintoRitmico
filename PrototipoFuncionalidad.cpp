@@ -119,9 +119,9 @@ void PrototipoFuncionalidad::spawnearSiguiente(const sf::Vector2i& posPlayer, in
 void PrototipoFuncionalidad::enAterrizajeJugador(const sf::Vector2i& posActual, int ahoraMs) {
     if (!_objetivoActivo) return;
 
-    if (posActual != _ultimaPos) {
-        (*_scoring).sumarNotaAterrizada();
-    }
+   // if (posActual != _ultimaPos) {
+   //     (*_scoring).sumarNotaAterrizada();
+  //  }
 
     // si no cayo en el objetivo, es bad. igual seteo un nuevo objetivo
     if (posActual != _posObjetivo) {
@@ -193,6 +193,7 @@ void PrototipoFuncionalidad::mostrarAcierto(aciertoGolpe aciertoGolpe, int delta
     }
 
     (*_scoring).sumarMsAterrizaje(deltaMs);
+    (*_scoring).sumarNotaAterrizada();
 }
 
 

@@ -28,6 +28,7 @@ private:
     sf::View viewGame;
 
     sf::Font fuentePrincipal;
+    sf::Font fuenteSecundaria;
     sf::Clock clock;
 
     // Estado
@@ -44,8 +45,9 @@ private:
     ConfigRitmo configRitmo;
     Scoring scoring;
     ScoringArchivo scoringArchivo;
+    Scoring mejoresPuntuaciones[10];
 
-
+    void dibujarTexto(std::string mensaje, float x, float y, int tamano, sf::Color color);
     // Variables de estado
     int nivelSeleccionado;
     int cancionSeleccionada;

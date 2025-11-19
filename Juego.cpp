@@ -18,8 +18,8 @@ Juego::Juego() :
     scoring(),
     scoringArchivo()
 {
-
-
+fuentePrincipal.loadFromFile("assets/fonts/arial.ttf");
+fuenteSecundaria.loadFromFile("assets/fonts/comic.ttf");
     window.setFramerateLimit(60);
 
     // Menu y vista de menu
@@ -44,16 +44,16 @@ Juego::Juego() :
     configRitmo.cadenciaMs = 500;
 
 
-    //Prueba persistencia de puntuacion
-//    Scoring puntuaciones[10];
-//    scoringArchivo.leerPuntuaciones(puntuaciones);
-//
-//    for (int i=0; i<10 ; i++) {
-//        if (puntuaciones[i].getPuntuacionTotal() > 0) {
-//            puntuaciones[i].toString();
-//
-//        } else break;
-//    }
+//    Prueba persistencia de puntuacion
+    Scoring puntuaciones[10];
+    scoringArchivo.leerPuntuaciones(puntuaciones);
+
+    for (int i=0; i<10 ; i++) {
+        if (puntuaciones[i].getPuntuacionTotal() > 0) {
+            puntuaciones[i].toString();
+
+        } else break;
+    }
 
 }
 
@@ -339,13 +339,32 @@ void Juego::dibujar() {
 
     switch (estadoActual)
     {
-    case MENU:
+    case MENU:{
         window.setView(viewUI);  // Cambio a vista Menu
         menu.dibujar(window);
         subMenu.dibujar(window); // Dibujar submenu encima si esta activo
-        break;
+        if(!subMenu.estaActivo()){
+         sf::Text titulo;
+        titulo.setFont(fuenteSecundaria); // <--- Usamos la nueva fuente "comic.ttf"
+        titulo.setString("LABERINTO RITMICO");
+        titulo.setCharacterSize(50); // Tamaño grande
+        titulo.setFillColor(sf::Color(255, 220, 0)); // Un amarillo/dorado brillante
+        titulo.setOutlineColor(sf::Color::Black); // Contorno negro para resaltarlo
+        titulo.setOutlineThickness(4.f); // Grosor del contorno
+
+        // Centrar el título
+        sf::FloatRect bounds = titulo.getLocalBounds();
+        titulo.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
+        titulo.setPosition(400, 100); // Posición X centrada, Y más arriba para dejar espacio
+
+        window.draw(titulo);
+        }
+        subMenu.dibujar(window);
+        break;}
 
     case JUGANDO: //lucas agregué un prefetch para corregir la cortina negra del juego, agregué codigo pero no cambie lo tuyo.
+      {
+
         // el problema era que al setear al view de la ventana pinta el proxima mapa al final, ya que sigue al jugador. seria un (actualizo camara, fijo view, pinto el mapa y pinto al jugador. tonces aparece esa cortina negra hasta que el proximo chunk 2x2 se dibuje.
 
         // Agregar Imagenes del Gameplay
@@ -388,6 +407,7 @@ void Juego::dibujar() {
                     std::cout << "Puntuacion guardada correctamente.";
                 } else std::cout << "Error al guardar la puntuacion.";
             }
+            scoringArchivo.leerPuntuaciones(mejoresPuntuaciones);
         }
         if (subMenu.estaActivo()) {
             // VOLVEMOS A LA VISTA FIJA
@@ -395,9 +415,83 @@ void Juego::dibujar() {
             // DIBUJAMOS EL MENÚ
             subMenu.dibujar(window);
         }
+        break;}
+        case PUNTAJES:
+
+        window.setView(viewUI);
+
+        //  Fondo
+        {
+            sf::RectangleShape fondoPuntajes(sf::Vector2f(window.getSize()));
+            fondoPuntajes.setFillColor(sf::Color(20, 20, 30)); // Azul muy oscuro
+            window.draw(fondoPuntajes);
+        }
+
+        // Título
+        dibujarTexto("TOP 10 MEJORES", 400, 60, 45, sf::Color(255, 200, 100)); // Naranja/Dorado
+
+        //  Cabecera de la tabla
+        // Usamos un color Cyan para diferenciarlo de los datos
+        dibujarTexto("Pos      Puntaje       Precision", 400, 130, 22, sf::Color::Cyan);
+
+        // Lista de Puntajes
+        for (int i = 0; i < 10; i++) {
+            // Obtenemos los datos del objeto Scoring
+            float puntos = mejoresPuntuaciones[i].getPuntuacionTotal();
+            float msPromedio = mejoresPuntuaciones[i].getPromedioMsAterrizaje();
+
+            // Posición Y: Empieza en 170 y baja 35px por cada renglón
+            float posY = 170 + (i * 35);
+
+            // Color: Los primeros 3 destacan (Oro, Plata, Bronce), el resto Blanco
+            sf::Color colorTexto = sf::Color::White;
+            if (i == 0) colorTexto = sf::Color(255, 215, 0); // Oro
+            else if (i == 1) colorTexto = sf::Color(192, 192, 192); // Plata
+            else if (i == 2) colorTexto = sf::Color(205, 127, 50);  // Bronce
+
+            if (puntos > 0) {
+                // Formato: "1.    15400 pts    (45ms)"
+                std::string linea = std::to_string(i + 1) + ".      " +
+                                    std::to_string((int)puntos) + " pts      " +
+                                    "(" + std::to_string((int)msPromedio) + "ms)";
+
+                dibujarTexto(linea, 400, posY, 24, colorTexto);
+            } else {
+                // Si el puntaje es 0, mostramos que esta vacío
+                std::string linea = std::to_string(i + 1) + ".      - - - - -";
+                dibujarTexto(linea, 400, posY, 24, sf::Color(100, 100, 100)); // Gris oscuro
+            }
+        }
+
+        //Instrucciones
+        //Dibujamos una linea separadora
+        {
+            sf::RectangleShape linea(sf::Vector2f(600, 2));
+            linea.setFillColor(sf::Color(100, 100, 100));
+            linea.setOrigin(300, 1);
+            linea.setPosition(400, 540);
+            window.draw(linea);
+        }
+
+        dibujarTexto("Presione ESC para volver", 400, 560, 18, sf::Color(200, 200, 200));
         break;
     }
 
+
     // Display
     window.display();
+}
+
+void Juego::dibujarTexto(std::string mensaje, float x, float y, int tamano, sf::Color color) {
+    sf::Text texto;
+    texto.setFont(fuentePrincipal);
+    texto.setString(mensaje);
+    texto.setCharacterSize(tamano);
+    texto.setFillColor(color);
+
+    sf::FloatRect bounds = texto.getLocalBounds();
+    texto.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
+    texto.setPosition(x, y);
+
+    window.draw(texto);
 }

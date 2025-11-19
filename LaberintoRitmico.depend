@@ -3203,7 +3203,7 @@
 	<SFML/Audio/Export.hpp>
 	<string>
 
-1762896942 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\main.cpp
+1762897014 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\main.cpp
 	"Juego.h"
 
 1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\sfml\include\sfml\graphics.hpp
@@ -3524,9 +3524,10 @@
 	<map>
 	<random>
 
-1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\prototipofuncionalidad.h
+1763066927 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\prototipofuncionalidad.h
 	<SFML/Graphics.hpp>
 	"Player.h"
+	"Scoring.h"
 
 1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\submenu.h
 	<SFML/Graphics.hpp>
@@ -3546,7 +3547,7 @@
 	<iostream>
 	"Player.h"
 
-1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\prototipofuncionalidad.cpp
+1763503030 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\prototipofuncionalidad.cpp
 	<SFML/Graphics.hpp>
 	<array>
 	<vector>
@@ -3564,10 +3565,10 @@
 1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\vida.cpp
 	"Vida.h"
 
-1762896860 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.cpp
+1763582150 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.cpp
 	"Juego.h"
 
-1762896629 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.h
+1763581861 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.h
 	<SFML/Graphics.hpp>
 	"Menu.h"
 	"SubMenu.h"
@@ -3575,6 +3576,8 @@
 	"AudioControl.h"
 	"Mapa.h"
 	"PrototipoFuncionalidad.h"
+	"Scoring.h"
+	"ScoringArchivo.h"
 
 1763255569 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\juego.cpp
 	"Juego.h"
@@ -3600,5 +3603,17 @@
 	"Scoring.h"
 
 1763256190 source:g:\mi unidad\estudio\utn - tup\carrera\2do cuatrimestre\programación ii\tps\tpi (juego)\proyecto\laberintoritmico\scoringarchivo.cpp
+	"ScoringArchivo.h"
+
+1763497510 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoring.h
+	<iostream>
+
+1763497510 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoringarchivo.h
+	"Scoring.h"
+
+1763497510 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoring.cpp
+	"Scoring.h"
+
+1763497510 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoringarchivo.cpp
 	"ScoringArchivo.h"
 
