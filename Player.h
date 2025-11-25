@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include <SFML/Graphics.hpp>
 #include "AudioControl.h"
 #include "Vida.h"
@@ -14,8 +15,7 @@ public:
     void aumentarVida();
     void restaurarVida();
     float getVida();
-
-
+    void reiniciarMovimiento();
 
 private:
     sf::Sprite _sprite;
@@ -23,9 +23,18 @@ private:
     float _tamanioCelda;
     float _velocidad;
     Vida _vida;
-    sf::Vector2i _PosGrilla; // Posición actual en la grilla
-    sf::Vector2i _PosGrillaAnt; // Posicion anterior en la grilla
-    sf::Vector2i _destino; // Destino en la grilla
+    sf::Vector2i _PosGrilla;     // Posición actual en la grilla
+    sf::Vector2i _PosGrillaAnt;  // Posicion anterior en la grilla
+    sf::Vector2i _destino;       // Destino en la grilla
+
+    bool _esPrimerMovimiento = true; //aaaa
+
+    // --- Juice de movimiento: animación de dash (squash & stretch) ---
+    sf::Vector2i _dirGrilla;        // Dirección del último movimiento en la grilla
+    float _dashAnimTimer;           // Tiempo transcurrido desde que empezó el dash
+    float _dashAnimDuration;        // Duración total de la animación de squash y stretch
+    float _facingX;                 // 1 = mirando a la derecha, -1 = mirando a la izquierda
+    bool  _estaDasheando;           // true mientras está en pleno dash
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void setDestino(int destinoX, int destinoY); // Seteo el destino al que se mueve el player. La uso desde "manejadorEventos".

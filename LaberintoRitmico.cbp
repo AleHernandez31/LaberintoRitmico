@@ -50,12 +50,10 @@
 		<Unit filename="Menu.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="ParticleSystemNodo.cpp" />
+		<Unit filename="ParticleSystemNodo.h" />
 		<Unit filename="Player.cpp" />
 		<Unit filename="Player.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="PrototipoFuncionalidad.cpp" />
-		<Unit filename="PrototipoFuncionalidad.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="Scoring.cpp" />
@@ -72,6 +70,10 @@
 		<Unit filename="Vida.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="cancion.cpp" />
+		<Unit filename="cancion.h" />
+		<Unit filename="gestornodos.cpp" />
+		<Unit filename="gestornodos.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mapa.cpp" />
 		<Unit filename="mapa.h" />

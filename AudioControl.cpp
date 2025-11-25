@@ -1,50 +1,63 @@
-#include <String>
+#include <string>
 #include <iostream>
 #include "AudioControl.h"
 
 /*
     Parametros:
-        path: ruta de la cancion
-        loop: indica si se debe repetir la canción
-        isMenu: lo usamos para determinar si usamos sf::Music o sf::Sound (Music se carga desde disco
-                                                                        y Sound desde memoria)
+        path: ruta de la cancion (mp3, ogg, wav, etc.)
+        isMenu: si es true usamos sf::Music (stream desde disco, ideal para musica de fondo),
+                si es false usamos sf::Sound (carga completa en memoria, ideal para SFX cortos)
 */
 AudioControl::AudioControl(std::string path, bool isMenu)
-    : _isMenu(isMenu) {
+    : _isMenu(isMenu)
+{
+    load(path);
+}
 
-    if (_isMenu) {
-        if (!_music.openFromFile(path)) {
-            std::cout << "Error al cargar la musica del menu.";
-            exit(101);
+void AudioControl::load(const std::string& path)
+{
+    if (_isMenu)
+    {
+        // Musica de fondo (menu, musica larga)
+        if (!_music.openFromFile(path))
+        {
+            std::cout << "Error al cargar musica: " << path << std::endl;
+            return;
         }
-        _music.setLoop(true);
+        _music.setLoop(true); // musica de fondo en loop
     }
-
-    if (!_isMenu) {
-        if (!_soundBuffer.loadFromFile(path)) {
-            std::cout << "Error al cargar la musica del nivel.";
-            exit(101);
+    else
+    {
+        // Sonido via SoundBuffer (en tu caso la estas usando para la musica del juego)
+        if (!_soundBuffer.loadFromFile(path))
+        {
+            std::cout << "Error al cargar sonido: " << path << std::endl;
+            return;
         }
         _sound.setBuffer(_soundBuffer);
     }
 }
 
-
-void AudioControl::play() {
-    _isMenu ? _music.play() : _sound.play();
+void AudioControl::play()
+{
+    if (_isMenu) _music.play();
+    else         _sound.play();
 }
 
-
-void AudioControl::stop() {
-    _isMenu ? _music.stop() : _sound.stop();
+void AudioControl::stop()
+{
+    if (_isMenu) _music.stop();
+    else         _sound.stop();
 }
 
-
-void AudioControl::pause() {
-    _isMenu ? _music.pause() : _sound.pause();
+void AudioControl::pause()
+{
+    if (_isMenu) _music.pause();
+    else         _sound.pause();
 }
 
-
-void AudioControl::setVolume(float volume) {
-    _isMenu ? _music.setVolume(volume) : _sound.setVolume(volume);
+void AudioControl::setVolume(float volume)
+{
+    if (_isMenu) _music.setVolume(volume);
+    else         _sound.setVolume(volume);
 }

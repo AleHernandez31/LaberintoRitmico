@@ -17,7 +17,7 @@ public:
     };
 
     void mostrarSeleccionNivel();
-    void mostrarSeleccionCancion(int nivel);  // Recibe el nivel seleccionado
+    void mostrarSeleccionCancion(int nivel);// Recibe el nivel seleccionado
     void mostrarMenuPausa();
     void mostrarAdvertenciaSalir();
     void ocultar();
@@ -41,7 +41,7 @@ private:
     // Titulo del submenú
     sf::Text titulo;
 
-    sf::Text* textos;        // Puntero al array dinamico de textos
+    sf::Text* textos;// Puntero al array dinamico de textos
     int capacidadTextos;
     // Opciones
 

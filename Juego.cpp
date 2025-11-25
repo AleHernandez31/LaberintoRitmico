@@ -1,6 +1,5 @@
 #include "Juego.h"
 
-//  El Constructor (Toda la configuracion de main)
 Juego::Juego() :
     window(sf::VideoMode(800, 600), "Laberinto Ritmico"),
     menu(), // Llama al constructor de Menu
@@ -10,55 +9,55 @@ Juego::Juego() :
     introMusic("assets/sounds/Intro.mp3", true),
     map(),
     // El player se inicializa usando 'map' y constantes
-    player(map.CELL, 2000.f, musicaJuego, {0,0}),
-    protoFunc(map.CELL, map.STREET),
+    player(map.CELL, 2000.f, musicaJuego, { 0,0 }),
+    cancion("assets/songs/Song.csv"),
+    gestorNodos(map.CELL, map.STREET),
     nivelSeleccionado(-1),
     cancionSeleccionada(-1),
     deltaTiempo(0.f),
     scoring(),
     scoringArchivo()
 {
-fuentePrincipal.loadFromFile("assets/fonts/arial.ttf");
-fuenteSecundaria.loadFromFile("assets/fonts/comic.ttf");
+    fuentePrincipal.loadFromFile("assets/fonts/arial.ttf");
+    fuenteSecundaria.loadFromFile("assets/fonts/comic.ttf");
     window.setFramerateLimit(60);
 
     // Menu y vista de menu
-
     viewUI = window.getDefaultView();
 
     // Musica
-
     musicaJuego.setVolume(100.f);
     introMusic.setVolume(100.f);
     introMusic.play();
 
     //Mundo y camara del juego.
-
-    const float VIEW_W = 2.f * Map::CELL + Map::STREET; //tamaño del mapa 2x2 para tener visibles siempre 4 opciones (3 viables)
+    const float VIEW_W = 2.f * Map::CELL + Map::STREET;
     const float VIEW_H = 2.f * Map::CELL + Map::STREET;
     viewGame.setSize(VIEW_W, VIEW_H);
 
-
-    // PROTOTIPO FUNCIONALIDAD
-
-    configRitmo.cadenciaMs = 500;
-
-
-//    Prueba persistencia de puntuacion
+    // Prueba persistencia de puntuacion
     Scoring puntuaciones[10];
     scoringArchivo.leerPuntuaciones(puntuaciones);
 
-    for (int i=0; i<10 ; i++) {
-        if (puntuaciones[i].getPuntuacionTotal() > 0) {
+    for (int i=0; i<10 ; i++)
+    {
+        if (puntuaciones[i].getPuntuacionTotal() > 0)
+        {
             puntuaciones[i].toString();
-
-        } else break;
+        }
+        else break;
     }
 
+    // Estado inicial de la cuenta regresiva / partida
+    enCuentaRegresiva    = false;
+    valorCuentaRegresiva = 0;
+    partidaActiva        = false;
 }
 
+
 //El Bucle Principal
-void Juego::iniciarBucle() {
+void Juego::iniciarBucle()
+{
     // Game Loop
     while (window.isOpen())
     {
@@ -69,7 +68,8 @@ void Juego::iniciarBucle() {
 }
 
 //Procesar Eventos ('pollEvent')
-void Juego::procesarEventos() {
+void Juego::procesarEventos()
+{
     // ReadInput
     sf::Event event;
     while (window.pollEvent(event))
@@ -83,13 +83,12 @@ void Juego::procesarEventos() {
         switch (estadoActual)
         {
         case MENU:
-            // Si el submenu esta activo
+            // Si el submenu esta activo (selección de nivel)
             if (subMenu.estaActivo())
             {
                 if (event.type == sf::Event::KeyPressed)
                 {
-
-                    // Navegacion
+                    // Navegación dentro del submenu
                     if (event.key.code == sf::Keyboard::W)
                     {
                         subMenu.moverArriba();
@@ -98,74 +97,101 @@ void Juego::procesarEventos() {
                     {
                         subMenu.moverAbajo();
                     }
-
                     else if (event.key.code == sf::Keyboard::Enter)
                     {
                         int opcion = subMenu.getOpcionSeleccionada();
 
-                        // Determinar que tipo de submenu está activo
+                        // En el MENU sólo usamos el submenu como SELECCION_NIVEL
                         if (subMenu.getTipo() == SubMenu::SELECCION_NIVEL)
                         {
-                            // Solo permitir seleccionar Nivel 1 (opcion 0)
-                            if (opcion == 0)
-                            {
-                                nivelSeleccionado = 1;
-                                std::cout << "Nivel seleccionado: " << nivelSeleccionado << std::endl;
+                            // opcion: 0,1,2 -> niveles 1,2,3
+                            nivelSeleccionado   = opcion + 1;
+                            cancionSeleccionada = nivelSeleccionado;
 
-                                // Mostrar submenu de canciones
-                                subMenu.mostrarSeleccionCancion(nivelSeleccionado);
+                            std::cout << "Nivel seleccionado: " << nivelSeleccionado << std::endl;
+
+                            // 1) Elegimos el CSV de nodos segun el nivel
+                            std::string pathCancion;
+                            if (nivelSeleccionado == 1)
+                            {
+                                // Nivel 1 = Around the World (fácil)
+                                pathCancion = "assets/songs/around_the_world_osu_easy_filtered_v2.csv";
+                            }
+                            else if (nivelSeleccionado == 2)
+                            {
+                                // Nivel 2 = Back in Black (intermedio)
+                                pathCancion = "assets/songs/back_in_black_normal.csv";
+                            }
+                            else if (nivelSeleccionado == 3)
+                            {
+                                // Nivel 3 = Through the Fire and Flames (difícil)
+                                pathCancion = "assets/songs/ttfaf_myth_hard_filtered.csv";
                             }
                             else
                             {
-                                std::cout << "Nivel bloqueado!" << std::endl;
+                                // Fallback por si las dudas
+                                pathCancion = "assets/songs/around_the_world_osu_easy_filtered_v2.csv";
                             }
-                        }
-                        else if (subMenu.getTipo() == SubMenu::SELECCION_CANCION)
-                        {
-                            // Solo permitir seleccionar Canción 1 (opcion 0)
-                            if (opcion == 0)
+
+                            // 2) MP3 a reproducir segun el nivel
+                            std::string pathMusica;
+                            if (nivelSeleccionado == 1)
                             {
-                                cancionSeleccionada = 1;
-                                std::cout << "Cancion seleccionada: " << cancionSeleccionada << std::endl;
-
-                                // Iniciar juego
-                                subMenu.ocultar();
-                                estadoActual = JUGANDO;
-                                introMusic.stop();
-                                musicaJuego.play();
-
-                                scoring.reiniciarScoring();
-                                protoFunc.iniciar(&player, configRitmo, &scoring); // PROTOTIPO FUNCIONALIDAD
-
-                                std::cout << "Iniciando juego - Nivel " << nivelSeleccionado
-                                          << " - Cancion " << cancionSeleccionada << std::endl;
+                                pathMusica = "assets/songs/ATW.mp3";   // Around the World
+                            }
+                            else if (nivelSeleccionado == 2)
+                            {
+                                pathMusica = "assets/songs/BIB.mp3";   // Back in Black
+                            }
+                            else if (nivelSeleccionado == 3)
+                            {
+                                pathMusica = "assets/songs/TTFAF.mp3"; // Through the Fire and Flames
                             }
                             else
                             {
-                                std::cout << "Cancion bloqueada!" << std::endl;
+                                pathMusica = "assets/songs/ATW.mp3";
                             }
+
+                            // Pasamos a estado JUGANDO con cuenta regresiva
+                            subMenu.ocultar();
+                            estadoActual = JUGANDO;
+                            introMusic.stop();
+
+                            // Recargamos la música del nivel antes de reproducir
+                            musicaJuego.stop();
+                            musicaJuego.load(pathMusica);
+
+                            scoring.reiniciarScoring();
+
+                            // Cargamos/recargamos la canción (CSV) del nivel elegido
+                            if (!cancion.cargarDesdeCSV(pathCancion))
+                            {
+                                std::cout << "Advertencia: no se pudo cargar "
+                                          << pathCancion
+                                          << ". El sistema de nodos no funcionara correctamente."
+                                          << std::endl;
+                            }
+
+                            // Contador de 3,2,1
+                            enCuentaRegresiva    = true;
+                            valorCuentaRegresiva = 3;
+                            relojCuentaRegresiva.restart();
+                            partidaActiva        = false;
+
+                            std::cout << "Iniciando cuenta regresiva - Nivel "
+                                      << nivelSeleccionado << " - Cancion "
+                                      << cancionSeleccionada << std::endl;
                         }
                     }
-
-                    // Volver atrás con ESC
                     else if (event.key.code == sf::Keyboard::Escape)
                     {
-                        if (subMenu.getTipo() == SubMenu::SELECCION_CANCION)
-                        {
-                            // Si esta en seleccion de cancion, volver a seleccion de nivel
-                            std::cout << "Volviendo a seleccion de nivel..." << std::endl;
-                            subMenu.mostrarSeleccionNivel();
-                        }
-                        else if (subMenu.getTipo() == SubMenu::SELECCION_NIVEL)
-                        {
-                            // Si esta en seleccion de nivel, cerrar submenu y volver al menu
-                            std::cout << "Cerrando submenu..." << std::endl;
-                            subMenu.ocultar();
-                        }
+                        // ESC desde selección de nivel vuelve al menú principal
+                        std::cout << "Cerrando submenu de nivel..." << std::endl;
+                        subMenu.ocultar();
                     }
                 }
             }
-            // Si el submenu NO esta activo (menu principal)
+            // Si el submenu NO está activo (menú principal)
             else
             {
                 if (event.type == sf::Event::KeyPressed)
@@ -184,7 +210,7 @@ void Juego::procesarEventos() {
 
                         if (opcion == 0)
                         {
-                            // JUGAR - Mostrar submenu de seleccion de nivel
+                            // JUGAR -> abrir selección de nivel (1,2,3)
                             std::cout << "Abriendo seleccion de nivel..." << std::endl;
                             subMenu.mostrarSeleccionNivel();
                         }
@@ -204,6 +230,7 @@ void Juego::procesarEventos() {
                 }
             }
             break;
+
 
         case JUGANDO:
             // Si el submenu esta activo (pausa o advertencia)
@@ -319,152 +346,201 @@ void Juego::procesarEventos() {
     }
 }
 
-// Actualizar (La logica del juego)
-void Juego::actualizar() {
-    //CMD (Este comentario estaba aquí)
-
+void Juego::actualizar()
+{
     // Update
     deltaTiempo = clock.restart().asSeconds(); // Tomo el tiempo transcurrido entre frames para pasarselo al objeto Player
 
     if (estadoActual == JUGANDO && !subMenu.estaActivo())
     {
-        player.update(deltaTiempo, protoFunc.siguienteNota());
+        // Mientras no haya empezado la partida, la nota actual la dejamos en 0
+        int indiceNota = partidaActiva ? gestorNodos.siguienteNota() : 0;
+        player.update(deltaTiempo, indiceNota);
+
+        // --- Cuenta regresiva 3-2-1 ---
+        if (enCuentaRegresiva)
+        {
+            float elapsed = relojCuentaRegresiva.getElapsedTime().asSeconds();
+            int nuevoValor = 3 - static_cast<int>(elapsed);
+            if (nuevoValor >= 0)
+            {
+                valorCuentaRegresiva = nuevoValor;
+            }
+
+            if (elapsed >= 3.f)
+            {
+                // Termina la cuenta regresiva: arrancan musica y nodos
+                enCuentaRegresiva = false;
+                partidaActiva     = true;
+
+                musicaJuego.play();
+                gestorNodos.iniciar(&player, &cancion, configRitmo, &scoring);
+            }
+        }
     }
 }
 
+
 // Dibujar
-void Juego::dibujar() {
+void Juego::dibujar()
+{
     // Draw
     window.clear();
 
     switch (estadoActual)
     {
-    case MENU:{
+    case MENU:
+    {
         window.setView(viewUI);  // Cambio a vista Menu
         menu.dibujar(window);
         subMenu.dibujar(window); // Dibujar submenu encima si esta activo
-        if(!subMenu.estaActivo()){
-         sf::Text titulo;
-        titulo.setFont(fuenteSecundaria); // <--- Usamos la nueva fuente "comic.ttf"
-        titulo.setString("LABERINTO RITMICO");
-        titulo.setCharacterSize(50); // Tamaño grande
-        titulo.setFillColor(sf::Color(255, 220, 0)); // Un amarillo/dorado brillante
-        titulo.setOutlineColor(sf::Color::Black); // Contorno negro para resaltarlo
-        titulo.setOutlineThickness(4.f); // Grosor del contorno
+        if(!subMenu.estaActivo())
+        {
+            sf::Text titulo;
+            titulo.setFont(fuenteSecundaria); // <--- Usamos la nueva fuente "comic.ttf"
+            titulo.setString("LABERINTO RITMICO");
+            titulo.setCharacterSize(50); // Tamaño grande
+            titulo.setFillColor(sf::Color(255, 220, 0)); // Un amarillo/dorado brillante
+            titulo.setOutlineColor(sf::Color::Black); // Contorno negro para resaltarlo
+            titulo.setOutlineThickness(4.f); // Grosor del contorno
 
-        // Centrar el título
-        sf::FloatRect bounds = titulo.getLocalBounds();
-        titulo.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
-        titulo.setPosition(400, 100); // Posición X centrada, Y más arriba para dejar espacio
+            // Centrar el título
+            sf::FloatRect bounds = titulo.getLocalBounds();
+            titulo.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
+            titulo.setPosition(400, 100); // Posición X centrada, Y más arriba para dejar espacio
 
-        window.draw(titulo);
+            window.draw(titulo);
         }
         subMenu.dibujar(window);
-        break;}
+        break;
+    }
 
-    case JUGANDO: //lucas agregué un prefetch para corregir la cortina negra del juego, agregué codigo pero no cambie lo tuyo.
-      {
-
-        // el problema era que al setear al view de la ventana pinta el proxima mapa al final, ya que sigue al jugador. seria un (actualizo camara, fijo view, pinto el mapa y pinto al jugador. tonces aparece esa cortina negra hasta que el proximo chunk 2x2 se dibuje.
-
+    case JUGANDO:
+    {
         // Agregar Imagenes del Gameplay
         viewGame.setCenter(player.getPosMundo()); // Centro la vista sobre el jugador. (mejora el seguimiento del dash)
         window.setView(viewGame);
 
-        //agregue un "prefetch" que encontre de un chabon que lo que hace es dibujar por adelantado los chunks vecinos, asi cuando la camara sigue al pj, ya esta esa parte cargada en el borde y no se nota la cortina.
-        const sf::Vector2i grid = player.getPosGrilla(); //tome el centro del mundo segun el chunk actual donde esta el pj
+        // Prefetch de chunks vecinos
+        const sf::Vector2i grid = player.getPosGrilla();
         map.draw2x2Framed(window, grid);
 
-        //Con esto logro que se dibujen los chunks vecinos a medida que la camara/player se aleja de la antigua interseccion/centro.
-        const sf::Vector2f world    = player.getPosMundo(); //marco la posicion del pj.
-        const sf::Vector2f centerG = { grid.x * Map::CELL, grid.y * Map::CELL }; //multiplico por map cell para conseguir la posicion en el mapa donde va caer la proxima interseccion.
-        const sf::Vector2f delta    = world - centerG; //calculo cuanto se dezplazo el pj desde el chunk anterior. asi puedo marcar un umbral para generar los otros chunks antes de que se genere la cortina.
+        const sf::Vector2f world    = player.getPosMundo();
+        const sf::Vector2f centerG = { grid.x * Map::CELL, grid.y * Map::CELL };
+        const sf::Vector2f delta   = world - centerG;
 
-        // el umbral es un valor "limite" que voy a usar como señal para decidir cuando generar los chunks vecinos.
-        // imaginenlo como un circulo que cuando estas adentro es TH negativo, pero cuando salis es TH positivo y ahi meto el prefetch para dibujar por adelantado el chunk que sigue. (si,estoy enfermo).
-        const float TH = Map::CELL * 0.25f; // lo defini como el 25% del tamaño de una manzana. tonces si se aleja mas del 25% del centro, asumimos la direccion a la que va y generamos ese chunk vecino.
-        int sx = (delta.x >  TH) ? +1 : (delta.x < -TH ? -1 : 0); //aca segun sx = (+1 este); (0 oeste).
-        int sy = (delta.y >  TH) ? +1 : (delta.y < -TH ? -1 : 0);// segun sy = (+1 sur); (0 norte).
+        const float TH = Map::CELL * 0.25f;
+        int sx = (delta.x >  TH) ? +1 : (delta.x < -TH ? -1 : 0);
+        int sy = (delta.y >  TH) ? +1 : (delta.y < -TH ? -1 : 0);
 
-        if (sx != 0) map.draw2x2Framed(window, grid + sf::Vector2i(sx, 0)); //si va hacia el este u oeste, se dibuja el vecino lateral.
-        if (sy != 0) map.draw2x2Framed(window, grid + sf::Vector2i(0, sy));// lo mismo para norte y sur.
-        if (sx != 0 && sy != 0) map.draw2x2Framed(window, grid + sf::Vector2i(sx, sy));//esto es para cuando se mueva en diagonal, por si llegamos a agregar que al inicio sale de la plaza y el primer dash es diagonal para llegar a una esquina, lo dejo armado para tenerlo  en cuenta.
+        if (sx != 0) map.draw2x2Framed(window, grid + sf::Vector2i(sx, 0));
+        if (sy != 0) map.draw2x2Framed(window, grid + sf::Vector2i(0, sy));
+        if (sx != 0 && sy != 0) map.draw2x2Framed(window, grid + sf::Vector2i(sx, sy));
 
         window.draw(player); // Dibujo Player
 
         bool continuarJugando = true;
-        if (!subMenu.estaActivo()) {
-            continuarJugando = protoFunc.actualizar(window, deltaTiempo); // PROTOTIPO FUNCIONALIDAD
+        if (!subMenu.estaActivo())
+        {
+            if (partidaActiva)
+            {
+                // GestorNodos maneja nodos + sincronizacion con la Cancion
+                continuarJugando = gestorNodos.actualizar(window, deltaTiempo);
 
-            if (!continuarJugando) {
-                scoring.calcularPuntuacionTotal(nivelSeleccionado);
-                estadoActual = MENU;
-                // Detener musica del juego y reiniciar la del intro
-                musicaJuego.stop();
-                introMusic.play();
+                if (!continuarJugando)
+                {
+                    scoring.calcularPuntuacionTotal(nivelSeleccionado);
+                    estadoActual = MENU;
+                    // Detener musica del juego y reiniciar la del intro
+                    musicaJuego.stop();
+                    introMusic.play();
 
-                if (scoringArchivo.guardarNuevaPuntuacion(scoring)) {
-                    std::cout << "Puntuacion guardada correctamente.";
-                } else std::cout << "Error al guardar la puntuacion.";
+                    if (scoringArchivo.guardarNuevaPuntuacion(scoring))
+                    {
+                        std::cout << "Puntuacion guardada correctamente.";
+                    }
+                    else std::cout << "Error al guardar la puntuacion.";
+                }
+                scoringArchivo.leerPuntuaciones(mejoresPuntuaciones);
             }
-            scoringArchivo.leerPuntuaciones(mejoresPuntuaciones);
         }
-        if (subMenu.estaActivo()) {
+
+        if (subMenu.estaActivo())
+        {
             // VOLVEMOS A LA VISTA FIJA
             window.setView(viewUI);
             // DIBUJAMOS EL MENÚ
             subMenu.dibujar(window);
         }
-        break;}
-        case PUNTAJES:
 
+        // --- Dibujar cuenta regresiva 3-2-1 ---
+        if (enCuentaRegresiva)
+        {
+            // Usamos la vista actual (viewGame) para centrar el texto
+            sf::View viewActual = window.getView();
+            sf::Vector2f centro = viewActual.getCenter();
+
+            sf::Text countdownText;
+            countdownText.setFont(fuenteSecundaria);
+            countdownText.setCharacterSize(80);
+            countdownText.setFillColor(sf::Color::White);
+            countdownText.setOutlineColor(sf::Color::Black);
+            countdownText.setOutlineThickness(4.f);
+
+            int valorMostrar = valorCuentaRegresiva;
+            if (valorMostrar < 1) valorMostrar = 1;
+
+            countdownText.setString(std::to_string(valorMostrar));
+
+            sf::FloatRect bounds = countdownText.getLocalBounds();
+            countdownText.setOrigin(bounds.left + bounds.width  / 2.0f,
+                                    bounds.top  + bounds.height / 2.0f);
+            countdownText.setPosition(centro);
+
+            window.draw(countdownText);
+        }
+        break;
+    }
+
+    case PUNTAJES:
         window.setView(viewUI);
 
-        //  Fondo
         {
             sf::RectangleShape fondoPuntajes(sf::Vector2f(window.getSize()));
             fondoPuntajes.setFillColor(sf::Color(20, 20, 30)); // Azul muy oscuro
             window.draw(fondoPuntajes);
         }
 
-        // Título
-        dibujarTexto("TOP 10 MEJORES", 400, 60, 45, sf::Color(255, 200, 100)); // Naranja/Dorado
-
-        //  Cabecera de la tabla
-        // Usamos un color Cyan para diferenciarlo de los datos
+        dibujarTexto("TOP 10 MEJORES", 400, 60, 45, sf::Color(255, 200, 100));
         dibujarTexto("Pos      Puntaje       Precision", 400, 130, 22, sf::Color::Cyan);
 
-        // Lista de Puntajes
-        for (int i = 0; i < 10; i++) {
-            // Obtenemos los datos del objeto Scoring
+        for (int i = 0; i < 10; i++)
+        {
             float puntos = mejoresPuntuaciones[i].getPuntuacionTotal();
             float msPromedio = mejoresPuntuaciones[i].getPromedioMsAterrizaje();
 
-            // Posición Y: Empieza en 170 y baja 35px por cada renglón
             float posY = 170 + (i * 35);
 
-            // Color: Los primeros 3 destacan (Oro, Plata, Bronce), el resto Blanco
             sf::Color colorTexto = sf::Color::White;
-            if (i == 0) colorTexto = sf::Color(255, 215, 0); // Oro
-            else if (i == 1) colorTexto = sf::Color(192, 192, 192); // Plata
-            else if (i == 2) colorTexto = sf::Color(205, 127, 50);  // Bronce
+            if (i == 0) colorTexto = sf::Color(255, 215, 0);
+            else if (i == 1) colorTexto = sf::Color(192, 192, 192);
+            else if (i == 2) colorTexto = sf::Color(205, 127, 50);
 
-            if (puntos > 0) {
-                // Formato: "1.    15400 pts    (45ms)"
+            if (puntos > 0)
+            {
                 std::string linea = std::to_string(i + 1) + ".      " +
                                     std::to_string((int)puntos) + " pts      " +
                                     "(" + std::to_string((int)msPromedio) + "ms)";
 
                 dibujarTexto(linea, 400, posY, 24, colorTexto);
-            } else {
-                // Si el puntaje es 0, mostramos que esta vacío
+            }
+            else
+            {
                 std::string linea = std::to_string(i + 1) + ".      - - - - -";
-                dibujarTexto(linea, 400, posY, 24, sf::Color(100, 100, 100)); // Gris oscuro
+                dibujarTexto(linea, 400, posY, 24, sf::Color(100, 100, 100));
             }
         }
 
-        //Instrucciones
-        //Dibujamos una linea separadora
         {
             sf::RectangleShape linea(sf::Vector2f(600, 2));
             linea.setFillColor(sf::Color(100, 100, 100));
@@ -477,12 +553,11 @@ void Juego::dibujar() {
         break;
     }
 
-
-    // Display
     window.display();
 }
 
-void Juego::dibujarTexto(std::string mensaje, float x, float y, int tamano, sf::Color color) {
+void Juego::dibujarTexto(std::string mensaje, float x, float y, int tamano, sf::Color color)
+{
     sf::Text texto;
     texto.setFont(fuentePrincipal);
     texto.setString(mensaje);
@@ -490,7 +565,8 @@ void Juego::dibujarTexto(std::string mensaje, float x, float y, int tamano, sf::
     texto.setFillColor(color);
 
     sf::FloatRect bounds = texto.getLocalBounds();
-    texto.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
+    texto.setOrigin(bounds.left + bounds.width / 2.0f,
+                    bounds.top + bounds.height / 2.0f);
     texto.setPosition(x, y);
 
     window.draw(texto);

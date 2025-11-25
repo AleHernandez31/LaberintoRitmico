@@ -38,6 +38,11 @@ bool Map::loadTextures() {
         "assets/mapa/block2.png",
         "assets/mapa/block3.png",
         "assets/mapa/block4.png",
+        "assets/mapa/block4.png",
+        "assets/mapa/block5.png",
+        "assets/mapa/block6.png",
+        "assets/mapa/block7.png",
+        "assets/mapa/block8.png"
 
     };
 
