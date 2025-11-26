@@ -289,6 +289,17 @@ void Juego::procesarEventos()
                                 std::cout << "Volviendo al menu principal..." << std::endl;
                             }
                         }
+                        else if (subMenu.getTipo() == SubMenu::FIN_NIVEL)
+                        {
+                            if (opcion == 0) {
+                                // Cuando aprieta "Continuar" en la pantalla de fin
+                                subMenu.ocultar();
+                                estadoActual = PUNTAJES; // Vamos a la tabla
+                                musicaJuego.stop();
+                                introMusic.play();
+                            }
+                        }
+
                     }
                     else if (event.key.code == sf::Keyboard::Escape)
                     {
@@ -449,11 +460,15 @@ void Juego::dibujar()
 
                 if (!continuarJugando)
                 {
-                    scoring.calcularPuntuacionTotal(nivelSeleccionado);
-                    estadoActual = MENU;
-                    // Detener musica del juego y reiniciar la del intro
-                    musicaJuego.stop();
-                    introMusic.play();
+                    scoring.setNivelCompletado();
+               scoring.calcularPuntuacionTotal(2);
+                scoringArchivo.guardarNuevaPuntuacion(scoring);
+                scoringArchivo.leerPuntuaciones(mejoresPuntuaciones);
+
+                // 2. Mostramos la pantalla de Fin de Nivel
+                // (Obtenemos el puntaje como entero para mostrarlo)
+                int puntos = (int)scoring.getPuntuacionTotal();
+                subMenu.mostrarFinNivel(puntos);
 
                     if (scoringArchivo.guardarNuevaPuntuacion(scoring))
                     {

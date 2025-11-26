@@ -13,7 +13,8 @@ public:
         SELECCION_NIVEL,
         SELECCION_CANCION,
         PAUSA,
-        ADVERTENCIA_SALIR
+        ADVERTENCIA_SALIR,
+        FIN_NIVEL
     };
 
     void mostrarSeleccionNivel();
@@ -21,6 +22,7 @@ public:
     void mostrarMenuPausa();
     void mostrarAdvertenciaSalir();
     void ocultar();
+    void mostrarFinNivel(int puntuacionTotal);
 
     bool estaActivo() const;
     TipoSubMenu getTipo() const;
@@ -40,7 +42,7 @@ private:
 
     // Titulo del submenú
     sf::Text titulo;
-
+    sf::Text textoPuntuacion;
     sf::Text* textos;// Puntero al array dinamico de textos
     int capacidadTextos;
     // Opciones

@@ -431,6 +431,9 @@ void GestorNodos::enAterrizajeJugador(const sf::Vector2i& posActual, int ahoraMs
     // Delta firmado: negativo = se adelanto, positivo = se atraso
     int delta = ahoraMs - _objetivoTiempoMs;
 
+    std::cout << "GOLPE: Delta = " << delta << "ms "
+              << "(Ventana Good Late: " << _cfg.ventanaGoodMsLate << ")" << std::endl;
+
     if (delta >= _cfg.ventanaPerfectMsEarly &&
         delta <= _cfg.ventanaPerfectMsLate)
     {

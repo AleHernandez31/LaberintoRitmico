@@ -96,7 +96,7 @@ void Scoring::calcularPuntuacionTotal(int dificultadJugada) {
     // Puntos de cada nota
     const float PTS_PERFECT = 100.f;
     const float PTS_GOOD = 70.f;
-    const float PTS_BAD = 30.f;
+    const float PTS_BAD = 0;
 
     // Multiplicadores por dificultad
     const float MULTIPLICADOR_FACIL   = 1.f;

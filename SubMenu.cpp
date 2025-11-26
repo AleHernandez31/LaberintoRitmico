@@ -10,6 +10,11 @@ SubMenu::SubMenu() {
     textos = nullptr;
     totalOpciones = 0;
     capacidadTextos = 0;
+    textoPuntuacion.setFont(font);
+    textoPuntuacion.setCharacterSize(50);
+    textoPuntuacion.setFillColor(sf::Color(100, 200, 255));
+    textoPuntuacion.setOutlineColor(sf::Color::Black);
+    textoPuntuacion.setOutlineThickness(2);
     configurarEstilo();
 }
 
@@ -37,7 +42,7 @@ void SubMenu::configurarEstilo() {
     titulo.setStyle(sf::Text::Bold);
 }
 
-// Métodos para memoria dinámica
+// Metodos para memoria dinamica
 
 void SubMenu::liberarTextos() {
     if (textos != nullptr) {
@@ -49,7 +54,7 @@ void SubMenu::liberarTextos() {
 }
 
 void SubMenu::crearTextos(int cantidad) {
-    liberarTextos();  // Primero liberar si había algo
+    liberarTextos();  // Primero liberar si habia algo
 
     textos = new sf::Text[cantidad];  // Crear nuevo array
     totalOpciones = cantidad;
@@ -91,39 +96,12 @@ void SubMenu::mostrarSeleccionNivel() {
     float posX = 400;
     float posYInicial = 240;
     float margen = 70;
-    int tamanio = 34;
+    int tamanio = 26;
 
     // Tres niveles disponibles (todos desbloqueados)
     agregarTexto("Nivel 1 - Around the World (Facil)",    posX, posYInicial,             tamanio, sf::Color::White, 0);
     agregarTexto("Nivel 2 - Back in Black (Normal)",      posX, posYInicial + margen,    tamanio, sf::Color::White, 1);
     agregarTexto("Nivel 3 - Through the Fire and Flames", posX, posYInicial + 2*margen,  tamanio, sf::Color::White, 2);
-}
-
-void SubMenu::mostrarSeleccionCancion(int nivel) {
-    activo = true;
-    tipoActual = SELECCION_CANCION;
-    opcionSeleccionada = 0;
-
-    // Configurar titulo
-    titulo.setString("SELECCIONA CANCION");
-    sf::FloatRect titleBounds = titulo.getLocalBounds();
-    titulo.setOrigin(titleBounds.left + titleBounds.width / 2,
-                     titleBounds.top + titleBounds.height / 2);
-    titulo.setPosition(400, 160);
-
-    // Crear array dinamico de 3 textos
-    crearTextos(3);
-
-    // Configuracion
-    float posX = 400;
-    float posYInicial = 240;
-    float margen = 70;
-    int tamanio = 32;
-
-    // Por si en el futuro usas este submenu para elegir canción manualmente
-    agregarTexto("Around the World (Facil)",          posX, posYInicial,             tamanio, sf::Color::White, 0);
-    agregarTexto("Back in Black (Normal)",           posX, posYInicial + margen,    tamanio, sf::Color::White, 1);
-    agregarTexto("Through the Fire and Flames (Hard)",posX, posYInicial + 2*margen, tamanio, sf::Color::White, 2);
 }
 
 void SubMenu::mostrarMenuPausa() {
@@ -218,6 +196,9 @@ void SubMenu::dibujar(sf::RenderWindow& window) {
     window.draw(titulo);
 
     // Dibujar opciones
+    if (tipoActual == FIN_NIVEL) {
+        window.draw(textoPuntuacion);
+    }
     for (int i = 0; i < totalOpciones; i++) {
 
         // Estilo base
@@ -251,4 +232,31 @@ void SubMenu::dibujar(sf::RenderWindow& window) {
                           bounds.top + bounds.height / 2);
     instruccion.setPosition(400, 460);
     window.draw(instruccion);
+}
+
+void SubMenu::mostrarFinNivel(int puntuacionTotal) {
+    activo = true;
+    tipoActual = FIN_NIVEL;
+    opcionSeleccionada = 0; // Solo habrá una opción (Volver)
+
+    // 1. Configurar Título
+    titulo.setString("JUEGO TERMINADO");
+    sf::FloatRect titleBounds = titulo.getLocalBounds();
+    titulo.setOrigin(titleBounds.left + titleBounds.width / 2, titleBounds.top + titleBounds.height / 2);
+    titulo.setPosition(400, 150);
+
+    // 2. Configurar Texto de Puntuacion (Informativo)
+    textoPuntuacion.setString("Puntuacion: " + std::to_string(puntuacionTotal));
+    sf::FloatRect scoreBounds = textoPuntuacion.getLocalBounds();
+    textoPuntuacion.setOrigin(scoreBounds.left + scoreBounds.width / 2, scoreBounds.top + scoreBounds.height / 2);
+    textoPuntuacion.setPosition(400, 250); // En el medio
+
+    // 3. Configurar Botón de Salida
+    crearTextos(1); // Solo 1 opción
+
+    float posX = 400;
+    float posY = 380;
+    int tamanio = 30;
+
+    agregarTexto("Continuar", posX, posY, tamanio, sf::Color::White, 0);
 }

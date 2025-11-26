@@ -2972,13 +2972,14 @@
 1762400791 source:c:\users\pc\desktop\version de git actualizada\laberintoritmico\vida.cpp
 	"Vida.h"
 
-1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\audiocontrol.cpp
-	<String>
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\audiocontrol.cpp
+	<string>
 	<iostream>
 	"AudioControl.h"
 
-1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\audiocontrol.h
+1764097031 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\audiocontrol.h
 	<SFML/Audio.hpp>
+	<string>
 
 1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\sfml\include\sfml\audio.hpp
 	<SFML/System.hpp>
@@ -3508,7 +3509,7 @@
 1762896313 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\menu.h
 	<SFML/Graphics.hpp>
 
-1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\player.h
+1764097031 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\player.h
 	<SFML/Graphics.hpp>
 	"AudioControl.h"
 	"Vida.h"
@@ -3529,12 +3530,12 @@
 	"Player.h"
 	"Scoring.h"
 
-1762895856 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\submenu.h
+1764098202 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\submenu.h
 	<SFML/Graphics.hpp>
 	<vector>
 	<string>
 
-1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\mapa.cpp
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\mapa.cpp
 	"Mapa.h"
 	<cmath>
 
@@ -3542,7 +3543,7 @@
 	"Menu.h"
 	<iostream>
 
-1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\player.cpp
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\player.cpp
 	<cmath>
 	<iostream>
 	"Player.h"
@@ -3558,24 +3559,25 @@
 	<ctime>
 	"PrototipoFuncionalidad.h"
 
-1762895972 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\submenu.cpp
+1764101932 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\submenu.cpp
 	"SubMenu.h"
 	<iostream>
 
-1762895856 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\vida.cpp
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\vida.cpp
 	"Vida.h"
 
-1763582150 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.cpp
+1764098552 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.cpp
 	"Juego.h"
 
-1763581861 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.h
+1764098529 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\juego.h
 	<SFML/Graphics.hpp>
 	"Menu.h"
 	"SubMenu.h"
 	"Player.h"
 	"AudioControl.h"
 	"Mapa.h"
-	"PrototipoFuncionalidad.h"
+	"GestorNodos.h"
+	"Cancion.h"
 	"Scoring.h"
 	"ScoringArchivo.h"
 
@@ -3611,7 +3613,7 @@
 1763497510 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoringarchivo.h
 	"Scoring.h"
 
-1763497510 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoring.cpp
+1764098756 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoring.cpp
 	"Scoring.h"
 
 1763497510 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\scoringarchivo.cpp
@@ -16398,4 +16400,44 @@
 	<cmath>
 	<iostream>
 	<algorithm>
+
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\cancion.cpp
+	"Cancion.h"
+	<fstream>
+	<sstream>
+	<algorithm>
+	<cctype>
+	<iostream>
+
+1764097031 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\cancion.h
+	<SFML/Graphics.hpp>
+	<vector>
+	<string>
+
+1764101012 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\gestornodos.cpp
+	"GestorNodos.h"
+	<cstdlib>
+	<ctime>
+	<cmath>
+	<iostream>
+	<algorithm>
+
+1764097031 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\gestornodos.h
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+	<vector>
+	<string>
+	"Player.h"
+	"Scoring.h"
+	"Cancion.h"
+	"ParticleSystemNodo.h"
+
+1764097031 c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\particlesystemnodo.h
+	<SFML/Graphics.hpp>
+	<vector>
+
+1764097031 source:c:\users\lucas\onedrive\escritorio\copia 2\laberintoritmico\particlesystemnodo.cpp
+	"ParticleSystemNodo.h"
+	<cmath>
+	<cstdlib>
 
