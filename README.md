@@ -7,6 +7,7 @@ Your goal is to move across a grid while following the rhythm of the song, landi
 [🎮 Play on itch.io](https://alehernandez31.itch.io/laberinto-ritmico)
 ---
 
+---
 ## 🎮 Gameplay
 
 - Notes are loaded from CSV and synchronized with the music.
