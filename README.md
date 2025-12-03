@@ -1,5 +1,6 @@
 # 🎵 Laberinto Rítmico
 _Rhythm Maze Adventure – C++ & SFML 2.6_
+[🎮 Play on itch.io](https://alehernandez31.itch.io/laberinto-ritmico)
 
 **Laberinto Rítmico** is a rhythm-based maze game developed in **C++** using **SFML 2.6**.  
 Your goal is to move across a grid while following the rhythm of the song, landing on the correct node at the right moment and avoiding trap nodes.
