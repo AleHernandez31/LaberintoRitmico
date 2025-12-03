@@ -99,3 +99,9 @@ This is an academic project created for educational purposes.
 - **Alejandro Hernández**
 - **Ricardo Gieco**
 - **Lucas Battiato**
+
+---
+
+## 👥 Special Thanks
+
+- **Brian Lara**
