@@ -25,6 +25,9 @@ Your goal is to move across a grid while following the rhythm of the song, landi
 - Life is linked to music volume: lower life = lower volume.
 - When life reaches 0 or the song ends, the level finishes.
 
+<img width="795" height="597" alt="imagen" src="https://github.com/user-attachments/assets/76e39f0b-0e04-4f32-8e8d-1fe82a80c9f7" />
+
+
 ---
 
 ## ✨ Features
